@@ -84,12 +84,8 @@ class DataSource extends DataTableSource {
 
     if (processos.isNotEmpty) {
       for (var element in processos) {
-        _rows!.add(RowTable(
-            element.nprocess,
-            element.requerido,
-            element.requerente,
-            formater.format(element.dataInicio),
-            element.titulo));
+        _rows!.add(RowTable(element.nprocess, element.requerido,
+            element.requerente, element.dataInicio, element.titulo));
       }
     }
 

@@ -54,7 +54,7 @@ class _ViewProcessState extends State<ViewProcess> {
       Process processo = processData.getProcess(widget.nprocesso);
       controllerNProcesso.text = processo.nprocess;
       controllerRequerido.text = processo.requerido;
-      controllerDataEntrada.text = formater.format(processo.dataInicio);
+      controllerDataEntrada.text = processo.dataInicio.toString();
       controllerTipo.text = processo.tipo;
       controllerAreaActuacao.text = processo.areaAtuacao;
       controllerRequerente.text = processo.requerente;
@@ -93,7 +93,7 @@ class _ViewProcessState extends State<ViewProcess> {
         controllerNProcesso.text,
         controllerEstado.text,
         //DateTime.parse(controllerDataEntrada.text),
-        DateTime.now(),
+        DateTime.now().toString(),
         controllerTipo.text,
         controllerAreaActuacao.text,
         controllerRequerido.text,

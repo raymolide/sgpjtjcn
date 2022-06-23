@@ -1,20 +1,20 @@
 import 'dart:convert';
 
 class Process {
-  String nprocess;
-  String estado;
-  DateTime dataInicio;
-  String tipo;
-  String areaAtuacao;
-  String requerido;
-  String requerente;
-  String titulo;
-  String parecer;
-  String juiz;
-  String seccao;
-  String advogadoRequerido;
-  String advogadoRequerente;
-  int incremento;
+  final String nprocess;
+  final String estado;
+  final String dataInicio;
+  final String tipo;
+  final String areaAtuacao;
+  final String requerido;
+  final String requerente;
+  final String titulo;
+  final String parecer;
+  final String juiz;
+  final String seccao;
+  final String advogadoRequerido;
+  final String advogadoRequerente;
+  final int incremento;
 
   Process(
       this.nprocess,
@@ -35,7 +35,7 @@ class Process {
   Process copyWith(
       {String? nprocess,
       String? estado,
-      DateTime? dataInicio,
+      String? dataInicio,
       String? tipo,
       String? areaAtuacao,
       String? requerido,
@@ -68,7 +68,7 @@ class Process {
     return {
       'nprocess': nprocess,
       'estado': estado,
-      'dataInicio': dataInicio.millisecondsSinceEpoch,
+      'dataInicio': dataInicio,
       'tipo': tipo,
       'areaAtuacao': areaAtuacao,
       'requerido': requerido,
@@ -83,11 +83,59 @@ class Process {
     };
   }
 
+  static Process fromJsonDB(Map<String, dynamic> json) => Process(
+      json['nprocess'],
+      json['estado'],
+      json['dataInicio'],
+      json['tipo'],
+      json['areaAtuacao'],
+      json['requerido'],
+      json['requerente'],
+      json['titulo'],
+      json['parecer'],
+      json['juiz'],
+      json['seccao'],
+      json['advogadoRequerido'],
+      json['advogadoRequerente'],
+      json['incremento']);
+
+  Process.fromJsonFire(Map<String, dynamic> json)
+      : nprocess = json['nprocess'],
+        estado = json['estado'],
+        dataInicio = json['dataInicio'],
+        tipo = json['tipo'],
+        areaAtuacao = json['areaAtuacao'],
+        requerido = json['requerido'],
+        requerente = json['requerente'],
+        titulo = json['titulo'],
+        parecer = json['parecer'],
+        juiz = json['juiz'],
+        seccao = json['seccao'],
+        advogadoRequerido = json['advogadoRequerido'],
+        advogadoRequerente = json['advogadoRequerente'],
+        incremento = json['incremento'];
+
+  Process fromJsonF(Map<String, dynamic> json) => copyWith(
+      nprocess: json['nprocess'],
+      estado: json['estado'],
+      dataInicio: json['dataInicio'],
+      tipo: json['tipo'],
+      areaAtuacao: json['areaAtuacao'],
+      requerido: json['requerido'],
+      requerente: json['requerente'],
+      titulo: json['titulo'],
+      parecer: json['parecer'],
+      juiz: json['juiz'],
+      seccao: json['seccao'],
+      advogadoRequerido: json['advogadoRequerido'],
+      advogadoRequerente: json['advogadoRequerente'],
+      incremento: json['incremento']);
+
   factory Process.fromMap(Map<String, dynamic> map) {
     return Process(
-      map['nprocess']?.toInt() ?? 0,
+      map['nprocess'] ?? '',
       map['estado'] ?? false,
-      DateTime.fromMillisecondsSinceEpoch(map['dataInicio']),
+      map['dataInicio'],
       map['tipo'] ?? '',
       map['areaAtuacao'] ?? '',
       map['requerido'] ?? '',

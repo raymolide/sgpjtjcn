@@ -1,8 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sgpjtjcn/model/process.dart';
 
 class ProcessRepository extends ChangeNotifier {
   List<Process> processos = [];
+
+  Stream<List<Process>> getFromDB() => FirebaseFirestore.instance
+      .collection('process')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Process.fromMap(doc.data())).toList());
 
   Process getProcess(String nprocesso) {
     Process processo =
