@@ -82,7 +82,7 @@ class _CreateProcessState extends State<CreateProcess> {
         controllerSeccao.text,
         controllerAdvogadoRequerido.text,
         controllerAdvogadoRequerente.text,
-        0);
+        "0");
   }
 
   @override

@@ -14,7 +14,7 @@ class Process {
   final String seccao;
   final String advogadoRequerido;
   final String advogadoRequerente;
-  final int incremento;
+  final String incremento;
 
   Process(
       this.nprocess,
@@ -46,7 +46,7 @@ class Process {
       String? seccao,
       String? advogadoRequerido,
       String? advogadoRequerente,
-      int? incremento}) {
+      String? incremento}) {
     return Process(
         nprocess ?? this.nprocess,
         estado ?? this.estado,

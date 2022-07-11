@@ -5,15 +5,30 @@ import 'package:sgpjtjcn/model/process.dart';
 class ProcessRepository extends ChangeNotifier {
   List<Process> processos = [];
 
-  Stream<List<Process>> getFromDB() => FirebaseFirestore.instance
-      .collection('process')
-      .snapshots()
-      .map((snapshot) =>
-          snapshot.docs.map((doc) => Process.fromMap(doc.data())).toList());
+  Future<List<Process>> getData() async {
+    processos.clear();
+    var db = FirebaseFirestore.instance;
+    var dados = await db.collection("process").get().then(
+          (res) => res.docs.map((snapshot) {
+            return snapshot.data();
+          }),
+          onError: (e) => print("Error completing: $e"),
+        );
+
+    dados.forEach((value) {
+      try {
+        processos.add(Process.fromJsonFire(value));
+      } catch (e) {
+        print("Erro: $e");
+      }
+    });
+
+    return processos;
+  }
 
   Process getProcess(String nprocesso) {
     Process processo =
-        processos.where((element) => element.nprocess == nprocesso).single;
+        processos.where((element) => element.nprocess == nprocesso).first;
     print("Processo $nprocesso Retornado");
     return processo;
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,93 +21,84 @@ class Pendentes extends StatefulWidget {
 }
 
 class _PendentesState extends State<Pendentes> {
-  Stream<List<Process>> getFromDB() {
-    return FirebaseFirestore.instance.collection('process').snapshots().map(
-        (snapshot) => snapshot.docs
-            .map((doc) => Process.fromJsonFire(doc.data()))
-            .toList());
+  late Future<List<Process>> fetchData;
+  @override
+  void initState() {
+    fetchData =
+        Provider.of<ProcessRepository>(context, listen: false).getData();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    CollectionReference pro = FirebaseFirestore.instance.collection('process');
 
     return Scaffold(
-      appBar:
-          AppBar(backgroundColor: primary, actions: [appBarActions(context)]),
-      drawer: MyDrawer(),
-      body: FutureBuilder(
-          future: pro.doc('f1wh6GHrjshWa2LucJOB').get(),
-          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Center(child: Text('Occorreu um erro'));
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Column(
-                  children: [CircularProgressIndicator(), Text("Esperando...")],
-                ),
-              );
-            }
-
-            if (snapshot.hasData && snapshot.data!.exists) {
-              Map<String, dynamic> data =
-                  snapshot.data!.data() as Map<String, dynamic>;
-
-              Process processo = Process.fromJsonDB(data);
-              Provider.of<ProcessRepository>(context, listen: false)
-                  .addProcess(processo);
+        appBar:
+            AppBar(backgroundColor: primary, actions: [appBarActions(context)]),
+        drawer: MyDrawer(),
+        body: FutureBuilder<List<Process>>(
+            future: fetchData,
+            initialData: [],
+            builder: (context, snapshot) {
+              while (snapshot.connectionState == ConnectionState.waiting ||
+                  snapshot.connectionState == ConnectionState.none) {
+                return Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 20),
+                    Text("Carregando...")
+                  ],
+                ));
+              }
 
               return SafeArea(
                   child: Container(
-                color: secundaria,
-                height: size.height - AppBar().preferredSize.height,
-                width: size.width,
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Card(
-                            elevation: 10,
-                            shadowColor: Colors.black,
-                            child: Column(
-                              children: [
-                                TableData(),
-                                SizedBox(height: size.height * .02),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Row(
+                      color: secundaria,
+                      height: size.height - AppBar().preferredSize.height,
+                      width: size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Card(
+                                  elevation: 10,
+                                  shadowColor: Colors.black,
+                                  child: Column(
+                                    children: [
+                                      TableData(),
+                                      SizedBox(height: size.height * .02),
+                                      Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.end,
                                         children: [
-                                          circleBtn(
-                                              Icon(Icons.create,
-                                                  color: secundaria), () {
-                                            Navigator.pushNamed(
-                                                context, '/process');
-                                          }, splashColor: Colors.white),
+                                          Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                circleBtn(
+                                                    Icon(Icons.create,
+                                                        color: secundaria), () {
+                                                  Navigator.pushNamed(
+                                                      context, '/process');
+                                                }, splashColor: Colors.white),
+                                              ],
+                                            ),
+                                          ),
                                         ],
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
-              ));
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
-    );
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          ],
+                        ),
+                      )));
+            }));
   }
 }

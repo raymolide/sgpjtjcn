@@ -19,8 +19,7 @@ class _TableDataState extends State<TableData> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-        child: Column(children: [
+    return Column(children: [
       SizedBox(
         height: size.height * .7,
         child: ListView(
@@ -66,7 +65,7 @@ class _TableDataState extends State<TableData> {
           ],
         ),
       )
-    ]));
+    ]);
   }
 }
 

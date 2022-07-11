@@ -6,7 +6,7 @@ Widget textField(String label, Icon icon, {TextEditingController? controller}) {
     controller: controller,
     style: const TextStyle(color: Colors.white),
     decoration: InputDecoration(
-        filled: true,
+        labelText: label,
         fillColor: primary,
         enabled: true,
         focusedBorder: OutlineInputBorder(

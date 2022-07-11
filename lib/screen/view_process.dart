@@ -50,6 +50,7 @@ class _ViewProcessState extends State<ViewProcess> {
     if (widget.nprocesso.isNotEmpty) {
       ProcessRepository processData =
           Provider.of<ProcessRepository>(context, listen: false);
+
       DateFormat formater = DateFormat('dd-MM-yyyy');
       Process processo = processData.getProcess(widget.nprocesso);
       controllerNProcesso.text = processo.nprocess;
@@ -104,7 +105,7 @@ class _ViewProcessState extends State<ViewProcess> {
         controllerSeccao.text,
         controllerAdvogadoRequerido.text,
         controllerAdvogadoRequerente.text,
-        0);
+        "");
   }
 
   @override
