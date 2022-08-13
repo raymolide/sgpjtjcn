@@ -32,6 +32,16 @@ class MyDrawer extends StatelessWidget {
                 )),
             ListTile(
               title: const Text(
+                'Requerer',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              hoverColor: primary,
+              onTap: () {
+                Navigator.pushNamed(context, '/requerer');
+              },
+            ),
+            ListTile(
+              title: const Text(
                 'Pendentes',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),

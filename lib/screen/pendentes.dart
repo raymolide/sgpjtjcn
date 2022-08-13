@@ -54,7 +54,6 @@ class _PendentesState extends State<Pendentes> {
                   ],
                 ));
               }
-
               return SafeArea(
                   child: Container(
                       color: secundaria,
@@ -65,36 +64,41 @@ class _PendentesState extends State<Pendentes> {
                         child: Column(
                           children: [
                             Expanded(
-                              child: Card(
-                                  elevation: 10,
-                                  shadowColor: Colors.black,
-                                  child: Column(
-                                    children: [
-                                      TableData(),
-                                      SizedBox(height: size.height * .02),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                circleBtn(
-                                                    Icon(Icons.create,
-                                                        color: secundaria), () {
-                                                  Navigator.pushNamed(
-                                                      context, '/process');
-                                                }, splashColor: Colors.white),
-                                              ],
+                              child: SingleChildScrollView(
+                                child: Card(
+                                    elevation: 10,
+                                    shadowColor: Colors.black,
+                                    child: Column(
+                                      children: [
+                                        TableData(),
+                                        SizedBox(height: size.height * .02),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  circleBtn(
+                                                      Icon(Icons.create,
+                                                          color: secundaria),
+                                                      () {
+                                                    Navigator.pushNamed(
+                                                        context, '/process');
+                                                  }, splashColor: Colors.white),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )),
+                                          ],
+                                        )
+                                      ],
+                                    )),
+                              ),
                             ),
                           ],
                         ),

@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +8,8 @@ import 'package:sgpjtjcn/screen/create_process.dart';
 import 'package:sgpjtjcn/screen/login.dart';
 import 'package:sgpjtjcn/screen/pendentes.dart';
 import 'package:sgpjtjcn/screen/register.dart';
+import 'package:sgpjtjcn/screen/report.dart';
+import 'package:sgpjtjcn/screen/requerer.dart';
 import 'package:sgpjtjcn/screen/settings.dart';
 import 'package:sgpjtjcn/screen/view_process.dart';
 
@@ -26,9 +26,11 @@ Future<void> main() async {
       child: MaterialApp(routes: {
         '/login': (context) => const Login(),
         '/register': (context) => const Register(),
+        '/requerer': (context) => Requerer(),
         '/pending': (context) => const Pendentes(),
         '/viewProcess': (context) => ViewProcess(nprocesso: ''),
         '/settings': (context) => MySettings(),
-        '/process': (context) => const CreateProcess()
-      }, home: const Pendentes())));
+        '/process': (context) => const CreateProcess(),
+        '/report': (context) => Report(),
+      }, home: Pendentes())));
 }

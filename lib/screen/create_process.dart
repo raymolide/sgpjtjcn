@@ -93,13 +93,12 @@ class _CreateProcessState extends State<CreateProcess> {
         appBar:
             AppBar(backgroundColor: primary, actions: [appBarActions(context)]),
         drawer: MyDrawer(),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            height: size.height - AppBar().preferredSize.height,
-            color: secundaria,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
+        body: Container(
+          height: size.height - AppBar().preferredSize.height,
+          color: secundaria,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: SingleChildScrollView(
               child: Card(
                 elevation: 10,
                 shadowColor: secundaria,

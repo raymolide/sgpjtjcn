@@ -4,9 +4,10 @@ import 'package:sgpjtjcn/util/constants.dart';
 Widget textField(String label, Icon icon, {TextEditingController? controller}) {
   return TextFormField(
     controller: controller,
-    style: const TextStyle(color: Colors.white),
+    style: TextStyle(color: Colors.black),
     decoration: InputDecoration(
         labelText: label,
+        filled: false,
         fillColor: primary,
         enabled: true,
         focusedBorder: OutlineInputBorder(
@@ -17,7 +18,7 @@ Widget textField(String label, Icon icon, {TextEditingController? controller}) {
             borderRadius: BorderRadius.circular(60)),
         hintText: label,
         labelStyle: TextStyle(color: primary),
-        hintStyle: const TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: primary),
         prefixIcon: icon,
         suffixStyle: TextStyle(color: primary)),
     onSaved: (String? value) {},
@@ -56,31 +57,35 @@ Widget textFieldEmail(String label, Icon icon,
 
 Widget textFieldFormParecer(String label, Icon icon,
     {TextEditingController? controller, linhas}) {
-  return TextFormField(
-    maxLines: linhas,
-    controller: controller,
-    style: const TextStyle(color: Colors.black),
-    decoration: InputDecoration(
-      label: Text(
-        label,
-        style: TextStyle(color: primary),
-      ),
-      labelStyle: TextStyle(color: primary),
-      hintText: label,
-      hintStyle: const TextStyle(color: Colors.black),
-      prefixIcon: icon,
-      suffixStyle: TextStyle(color: primary),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: primary),
+  return SingleChildScrollView(
+    child: TextFormField(
+      maxLines: linhas,
+      controller: controller,
+      style: const TextStyle(color: Colors.black),
+      decoration: InputDecoration(
+        label: Text(
+          label,
+          style: TextStyle(color: primary),
+        ),
+        labelStyle: TextStyle(color: primary),
+        hintText: label,
+        hintStyle: const TextStyle(color: Colors.black),
+        prefixIcon: icon,
+        suffixStyle: TextStyle(color: primary),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: primary),
+        ),
       ),
     ),
   );
 }
 
-Widget textFieldPassword(String label, Icon icon) {
+Widget textFieldPassword(String label, Icon icon,
+    {TextEditingController? controller}) {
   return TextFormField(
     //keyboardType: TextInputType.visiblePassword,
     obscureText: true,
+    controller: controller,
     style: const TextStyle(color: Colors.white),
     enabled: true,
     decoration: InputDecoration(

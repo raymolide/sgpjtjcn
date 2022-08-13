@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 
 Widget textButton(BuildContext context, String label, String route,
-    GlobalKey<FormState> formKey) {
+    GlobalKey<FormState> formKey,
+    {TextEditingController? email,
+    TextEditingController? password,
+    Future<bool>? condition}) {
   return TextButton(
     child: Text(label, style: const TextStyle(fontSize: 16)),
     style: ButtonStyle(
@@ -16,7 +21,17 @@ Widget textButton(BuildContext context, String label, String route,
                 side: BorderSide(color: primary)))),
     onPressed: () {
       if (formKey.currentState!.validate()) {
-        Navigator.pushNamed(context, route);
+        bool condicao = false;
+
+        condition?.then((value) {
+          print("Condição: $value");
+          return value;
+        });
+        if (condicao == true) {
+          Navigator.pushNamed(context, route);
+        } else {
+          print(condicao);
+        }
       }
     },
   );

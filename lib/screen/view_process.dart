@@ -115,12 +115,12 @@ class _ViewProcessState extends State<ViewProcess> {
       appBar:
           AppBar(backgroundColor: primary, actions: [appBarActions(context)]),
       drawer: MyDrawer(),
-      body: SingleChildScrollView(
-        child: Container(
-          height: size.height - AppBar().preferredSize.height,
-          color: secundaria,
-          child: Padding(
-            padding: const EdgeInsets.all(15),
+      body: Container(
+        height: size.height - AppBar().preferredSize.height,
+        color: secundaria,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: SingleChildScrollView(
             child: Card(
               elevation: 10,
               shadowColor: secundaria,
