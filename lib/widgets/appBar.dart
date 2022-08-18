@@ -14,13 +14,13 @@ Widget appBarActions(BuildContext context) {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("Raimundo Molide"),
+                Text(""),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("Advogado"),
+                Text(""),
               ],
             ),
           ],

@@ -1,16 +1,15 @@
-class RowTable {
+class RowTableReq {
   final String valueA;
   final String valueB;
   final String valueC;
   final String valueD;
-  final String valueE;
+
   bool selected = false;
 
-  RowTable(
+  RowTableReq(
     this.valueA,
     this.valueB,
     this.valueC,
     this.valueD,
-    this.valueE,
   );
 }

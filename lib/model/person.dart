@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 class Person {
-  int codigo;
-  int telefone;
+  String codigo;
+  String telefone;
   String nome;
   String apelido;
   String endereco;
@@ -28,8 +28,8 @@ class Person {
   );
 
   Person copyWith({
-    int? codigo,
-    int? telefone,
+    String? codigo,
+    String? telefone,
     String? nome,
     String? apelido,
     String? endereco,
@@ -54,6 +54,19 @@ class Person {
       genero ?? this.genero,
     );
   }
+
+  Person.fromJsonFire(Map<String, dynamic> json)
+      : codigo = json['codigo'],
+        telefone = json['telefone'],
+        nome = json['nome'],
+        apelido = json['apelido'],
+        endereco = json['endereco'],
+        nrBI = json['nrBI'],
+        profissao = json['profissao'],
+        email = json['email'],
+        estadoCivil = json['estadoCivil'],
+        tipo = json['tipo'],
+        genero = json['genero'];
 
   Map<String, dynamic> toMap() {
     return {

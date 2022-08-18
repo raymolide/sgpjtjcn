@@ -5,6 +5,9 @@ import 'package:sgpjtjcn/util/constants.dart';
 class MyDrawer extends StatelessWidget {
   MyDrawer({Key? key}) : super(key: key);
 
+  bool isFuncionario = true;
+  bool isAdvogado = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,47 +28,76 @@ class MyDrawer extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     subtitle: Text(
-                      'Juiz',
+                      '',
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ),
                 )),
-            ListTile(
-              title: const Text(
-                'Requerer',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              hoverColor: primary,
-              onTap: () {
-                Navigator.pushNamed(context, '/requerer');
-              },
-            ),
-            ListTile(
-              title: const Text(
-                'Pendentes',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              hoverColor: primary,
-              onTap: () {
-                Navigator.pushNamed(context, '/');
-              },
-            ),
-            ListTile(
-              title: const Text('Criar Processos',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              hoverColor: primary,
-              onTap: () {
-                Navigator.pushNamed(context, '/process');
-              },
-            ),
-            ListTile(
-              title: const Text('Relatário',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              hoverColor: primary,
-              onTap: () {
-                Navigator.pushNamed(context, '/report');
-              },
-            ),
+            !isFuncionario
+                ? ListTile(
+                    title: const Text(
+                      'Requerer',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    hoverColor: primary,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/requerer');
+                    },
+                  )
+                : Container(),
+            isFuncionario
+                ? ListTile(
+                    title: const Text(
+                      'Entradas',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    hoverColor: primary,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/entradas');
+                    },
+                  )
+                : Container(),
+            !isFuncionario
+                ? ListTile(
+                    title: const Text(
+                      'Meus Processos',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    hoverColor: primary,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/pending');
+                    },
+                  )
+                : ListTile(
+                    title: const Text(
+                      'Processos Pendentes',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    hoverColor: primary,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/pending');
+                    },
+                  ),
+            isFuncionario
+                ? ListTile(
+                    title: const Text('Criar Processos',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    hoverColor: primary,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/process');
+                    },
+                  )
+                : Container(),
+            isFuncionario
+                ? ListTile(
+                    title: const Text('Relatário',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    hoverColor: primary,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/report');
+                    },
+                  )
+                : Container(),
             ListTile(
               title: const Text('Conta',
                   style: TextStyle(fontWeight: FontWeight.bold)),

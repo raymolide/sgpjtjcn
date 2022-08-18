@@ -21,16 +21,16 @@ Widget textButton(BuildContext context, String label, String route,
                 side: BorderSide(color: primary)))),
     onPressed: () {
       if (formKey.currentState!.validate()) {
-        bool condicao = false;
+        bool condicao = true;
 
         condition?.then((value) {
-          print("Condição: $value");
+          condicao = value;
           return value;
         });
         if (condicao == true) {
           Navigator.pushNamed(context, route);
         } else {
-          print(condicao);
+          print("condi: $condicao");
         }
       }
     },

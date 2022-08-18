@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sgpjtjcn/model/person.dart';
@@ -6,9 +7,30 @@ class PersonRepository extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   List<Person> pessoas = [];
 
-  Person getPerson(String codigo) {
-    Person pessoa = pessoas.where((element) => element.codigo == codigo).single;
-    print("Pessoa $codigo Retornado");
+  Future<List<Person>> getData() async {
+    pessoas.clear();
+    var db = FirebaseFirestore.instance;
+    var dados = await db.collection("person").get().then(
+          (res) => res.docs.map((snapshot) {
+            return snapshot.data();
+          }),
+          onError: (e) => print("Error completing: $e"),
+        );
+
+    dados.forEach((value) {
+      try {
+        pessoas.add(Person.fromJsonFire(value));
+      } catch (e) {
+        print("Erro: $e");
+      }
+    });
+
+    return pessoas;
+  }
+
+  Person getPerson(String email) {
+    Person pessoa = pessoas.where((element) => element.email == email).single;
+    print("Pessoa $email Retornado");
     return pessoa;
   }
 
@@ -46,6 +68,7 @@ class PersonRepository extends ChangeNotifier {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
       resposta = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

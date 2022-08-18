@@ -5,8 +5,8 @@ class Required extends Person {
 
   Required(
       this.queixa,
-      int codigo,
-      int telefone,
+      String codigo,
+      String telefone,
       String nome,
       String apelido,
       String endereco,
