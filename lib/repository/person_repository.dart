@@ -6,6 +6,7 @@ import 'package:sgpjtjcn/model/person.dart';
 class PersonRepository extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   List<Person> pessoas = [];
+  String email = "";
 
   Future<List<Person>> getData() async {
     pessoas.clear();

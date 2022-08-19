@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
+import 'package:sgpjtjcn/repository/process_repository.dart';
+import 'package:sgpjtjcn/repository/requerimento_repository.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 
 Widget textButton(
@@ -25,6 +27,8 @@ Widget textButton(
     onPressed: () async {
       if (formKey.currentState!.validate()) {
         if (flag == 'R') {
+          Provider.of<PersonRepository>(context, listen: false).email =
+              email.text;
           await Provider.of<PersonRepository>(context, listen: false)
               .register(email.text, password.text)
               .then((acesso) async => acesso
@@ -32,12 +36,18 @@ Widget textButton(
                   : alertaError(context));
         }
         if (flag == 'L') {
+          Provider.of<PersonRepository>(context, listen: false).email =
+              email.text;
           await Provider.of<PersonRepository>(context, listen: false)
               .signIn(email.text, password.text)
               .then((acesso) async => acesso
                   ? await Navigator.pushNamed(context, "/pending")
                   : alertaError(context));
         }
+
+        Provider.of<PersonRepository>(context, listen: false).getData();
+        Provider.of<ProcessRepository>(context, listen: false).getData();
+        Provider.of<RequerimentoRepository>(context, listen: false).getData();
       }
     },
   );

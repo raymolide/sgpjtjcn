@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sgpjtjcn/model/requerimento.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
+import 'package:sgpjtjcn/repository/process_repository.dart';
+import 'package:sgpjtjcn/repository/requerimento_repository.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 import 'package:sgpjtjcn/widgets/button.dart';
 import 'package:sgpjtjcn/widgets/textField.dart';
@@ -16,6 +19,14 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  @override
+  void initState() {
+    Provider.of<PersonRepository>(context, listen: false).getData();
+    Provider.of<ProcessRepository>(context, listen: false).getData();
+    Provider.of<RequerimentoRepository>(context, listen: false).getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

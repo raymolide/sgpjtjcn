@@ -30,23 +30,28 @@ class _MySettingsState extends State<MySettings> {
   TextEditingController controllerCodigo = TextEditingController();
   TextEditingController controllerEndereco = TextEditingController();
 
-  var estadoCivil = ['Solteiro/a', 'Casado/a', "Divorciado/a", "Viuvo/a"];
-  String estado = "Solteiro/a";
-  var perfils = [
-    'Admin',
-    'Advogado/a',
-    "Requerente",
-    "Requerido",
-    "Juiz",
-    "Escrivão"
+  List<String> estadoCivil = [
+    'Solteiro/a',
+    'Casado/a',
+    "Divorciado/a",
+    "Viuvo/a"
   ];
-  String perfil = "Escrivão";
+  String estado = "Solteiro/a";
+
+  List<String> generos = ['Masculino', 'Feminino'];
+  String genero = "Masculino";
+
+  List<String> perfils = ['Admin', "Parte", "Juiz", "Escrivão"];
+  String perfil = "Parte";
 
   late Future<List<Person>> fetchData;
 
   @override
   void initState() {
     fetchData = Provider.of<PersonRepository>(context, listen: false).getData();
+    controllerGenero.text = genero;
+    controllerTipo.text = perfil;
+    controllerEstadoCivil.text = estado;
     super.initState();
   }
 
@@ -151,9 +156,48 @@ class _MySettingsState extends State<MySettings> {
                             ),
                             SizedBox(width: size.width * .01),
                             Expanded(
-                              child: textField(
-                                  'Gênero', Icon(Icons.person, color: primary),
-                                  controller: controllerGenero),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Genero",
+                                    style: TextStyle(color: primary),
+                                  ),
+                                  DropdownButtonHideUnderline(
+                                    child: ButtonTheme(
+                                      alignedDropdown: true,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 14.0, right: 14),
+                                        child: DropdownButton(
+                                          hint: Text(genero),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .button,
+                                          alignment:
+                                              AlignmentDirectional.bottomEnd,
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_down),
+                                          value: genero,
+                                          items: generos.map((String items) {
+                                            return DropdownMenuItem(
+                                              value: items,
+                                              child: Text(items),
+                                            );
+                                          }).toList(),
+                                          onChanged: (String? value) {
+                                            setState(() {
+                                              genero = value!;
+                                              controllerGenero.text = genero;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -187,6 +231,7 @@ class _MySettingsState extends State<MySettings> {
                                     onChanged: (String? value) {
                                       setState(() {
                                         estado = value!;
+                                        controllerEstadoCivil.text = estado;
                                       });
                                     },
                                   ),
@@ -213,7 +258,6 @@ class _MySettingsState extends State<MySettings> {
                                     value: perfil,
                                     items: perfils.map((String items) {
                                       return DropdownMenuItem(
-                                        enabled: false,
                                         value: items,
                                         child: Text(items),
                                       );
@@ -221,6 +265,7 @@ class _MySettingsState extends State<MySettings> {
                                     onChanged: (String? value) {
                                       setState(() {
                                         perfil = value!;
+                                        controllerTipo.text = perfil;
                                       });
                                     },
                                   ),
@@ -245,6 +290,10 @@ class _MySettingsState extends State<MySettings> {
                               circleBtnForm(
                                   const Icon(Icons.save, color: Colors.white),
                                   () async {
+                                controllerEmail.text =
+                                    Provider.of<PersonRepository>(context,
+                                            listen: false)
+                                        .email;
                                 Person pessoa = Person(
                                     controllerCodigo.text,
                                     controllerTelefone.text,
