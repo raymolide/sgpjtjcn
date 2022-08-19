@@ -69,14 +69,8 @@ class _RegisterState extends State<Register> {
                                       Icon(Icons.lock, color: secundaria),
                                       controller: password),
                                   SizedBox(height: size.height * 0.1),
-                                  textButton(
-                                      context, "Registar", '/perfil', _formKey,
-                                      email: email,
-                                      password: password,
-                                      condition: Provider.of<PersonRepository>(
-                                              context,
-                                              listen: false)
-                                          .register(email.text, password.text)),
+                                  textButton(context, "Registar", '/perfil',
+                                      _formKey, email, password, "R"),
                                   SizedBox(height: size.height * 0.04),
                                   InkWell(
                                       child: Text(

@@ -3,11 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 
-Widget textButton(BuildContext context, String label, String route,
+Widget textButton(
+    BuildContext context,
+    String label,
+    String route,
     GlobalKey<FormState> formKey,
-    {TextEditingController? email,
-    TextEditingController? password,
-    Future<bool>? condition}) {
+    TextEditingController email,
+    TextEditingController password,
+    String flag) {
   return TextButton(
     child: Text(label, style: const TextStyle(fontSize: 16)),
     style: ButtonStyle(
@@ -19,20 +22,41 @@ Widget textButton(BuildContext context, String label, String route,
             RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
                 side: BorderSide(color: primary)))),
-    onPressed: () {
+    onPressed: () async {
       if (formKey.currentState!.validate()) {
-        bool condicao = true;
-
-        condition?.then((value) {
-          condicao = value;
-          return value;
-        });
-        if (condicao == true) {
-          Navigator.pushNamed(context, route);
-        } else {
-          print("condi: $condicao");
+        if (flag == 'R') {
+          await Provider.of<PersonRepository>(context, listen: false)
+              .register(email.text, password.text)
+              .then((acesso) async => acesso
+                  ? await Navigator.pushNamed(context, route)
+                  : alertaError(context));
+        }
+        if (flag == 'L') {
+          await Provider.of<PersonRepository>(context, listen: false)
+              .signIn(email.text, password.text)
+              .then((acesso) async => acesso
+                  ? await Navigator.pushNamed(context, "/pending")
+                  : alertaError(context));
         }
       }
+    },
+  );
+}
+
+Future alertaError(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Erro"),
+        content: Text("As suas credencias são invalidas"),
+        actions: [
+          TextButton(
+            child: Text("Ok"),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      );
     },
   );
 }

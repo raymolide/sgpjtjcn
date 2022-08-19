@@ -79,7 +79,7 @@ class PersonRepository extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
-
+    print("Register: $resposta");
     return resposta;
   }
 
@@ -98,6 +98,8 @@ class PersonRepository extends ChangeNotifier {
         print('Wrong password provided for that user.');
       }
     }
+
+    print("Login: $resposta");
     return resposta;
   }
 }

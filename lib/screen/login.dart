@@ -58,11 +58,7 @@ class _LoginState extends State<Login> {
                               controller: password),
                           SizedBox(height: size.height * 0.15),
                           textButton(context, "Login", '/pending', _formKey,
-                              email: email,
-                              password: password,
-                              condition: Provider.of<PersonRepository>(context,
-                                      listen: false)
-                                  .signIn(email.text, password.text)),
+                              email, password, "L"),
                           SizedBox(height: size.height * 0.03),
                           InkWell(
                             child: Text(
