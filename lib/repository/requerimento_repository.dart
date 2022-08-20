@@ -34,7 +34,12 @@ class RequerimentoRepository extends ChangeNotifier {
     return requerimento;
   }
 
-  List<Requerimento> getAll() => requerimentos;
+  List<Requerimento> getAll() {
+    requerimentos.sort((a, b) =>
+        int.parse(a.nRequerimento).compareTo(int.parse(b.nRequerimento)));
+
+    return requerimentos.reversed.toList();
+  }
 
   void addRequerimento(Requerimento requerimento) {
     requerimentos.add(requerimento);

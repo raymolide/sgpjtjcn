@@ -58,11 +58,13 @@ class _MySettingsState extends State<MySettings> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    PersonRepository repository =
+        Provider.of<PersonRepository>(context, listen: false);
     return SizedBox(
         height: size.height - AppBar().preferredSize.height,
         width: size.width,
         child: FutureBuilder<List<Person>>(
-            initialData: [],
+            initialData: repository.pessoas,
             future: fetchData,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting ||
@@ -70,12 +72,19 @@ class _MySettingsState extends State<MySettings> {
                 return Center(child: CircularProgressIndicator());
               } else {
                 if (snapshot.data!.isNotEmpty) {
-                  List<Person> codigos = snapshot.data!;
-                  codigos.sort(((a, b) =>
+                  List<Person> pessoas = snapshot.data!;
+                  pessoas.sort(((a, b) =>
                       int.parse(a.codigo).compareTo(int.parse(b.codigo))));
 
                   controllerCodigo.text =
-                      (int.parse(codigos.last.codigo) + 1).toString();
+                      (int.parse(pessoas.last.codigo) + 1).toString();
+                  String email = repository.email;
+                  if (pessoas.any((element) => element.email == email)) {
+                    print('carregar dados $email ');
+                    preencherDados(pessoas
+                        .where((element) => element.email == email)
+                        .first);
+                  }
                 }
 
                 return SingleChildScrollView(
@@ -290,10 +299,7 @@ class _MySettingsState extends State<MySettings> {
                               circleBtnForm(
                                   const Icon(Icons.save, color: Colors.white),
                                   () async {
-                                controllerEmail.text =
-                                    Provider.of<PersonRepository>(context,
-                                            listen: false)
-                                        .email;
+                                controllerEmail.text = repository.email;
                                 Person pessoa = Person(
                                     controllerCodigo.text,
                                     controllerTelefone.text,
@@ -307,15 +313,25 @@ class _MySettingsState extends State<MySettings> {
                                     controllerTipo.text,
                                     controllerGenero.text);
 
-                                Provider.of<PersonRepository>(context,
-                                        listen: false)
-                                    .addPerson(pessoa);
-                                Map<String, dynamic> mapPessoa = pessoa.toMap();
-
-                                final reqRef = FirebaseFirestore.instance
-                                    .collection('person')
-                                    .doc();
-                                await reqRef.set(mapPessoa);
+                                if (repository
+                                    .isExistentePerson(controllerCodigo.text)) {
+                                  repository.updatePerson(pessoa);
+                                  Map<String, dynamic> mapPessoa =
+                                      pessoa.toMap();
+                                  final reqRef = FirebaseFirestore.instance
+                                      .collection('person')
+                                      .doc();
+                                  await reqRef.update(mapPessoa);
+                                  alertaError(context);
+                                } else {
+                                  repository.addPerson(pessoa);
+                                  Map<String, dynamic> mapPessoa =
+                                      pessoa.toMap();
+                                  final reqRef = FirebaseFirestore.instance
+                                      .collection('person')
+                                      .doc();
+                                  await reqRef.set(mapPessoa);
+                                }
 
                                 Navigator.popAndPushNamed(context, "/pending");
                               }, _formKey, splashColor: Colors.white)
@@ -328,5 +344,37 @@ class _MySettingsState extends State<MySettings> {
                 );
               }
             }));
+  }
+
+  void preencherDados(Person pessoa) {
+    controllerCodigo.text = pessoa.codigo;
+    controllerTelefone.text = pessoa.telefone;
+    controllerNome.text = pessoa.nome;
+    controllerApelido.text = pessoa.apelido;
+    controllerEndereco.text = pessoa.endereco;
+    controllerBI.text = pessoa.nrBI;
+    controllerProfissao.text = pessoa.profissao;
+    controllerEmail.text = pessoa.email;
+    controllerEstadoCivil.text = pessoa.estadoCivil;
+    controllerTipo.text = pessoa.tipo;
+    controllerGenero.text = pessoa.genero;
+  }
+
+  Future alerta(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Actualização"),
+          content: Text("Dados actualizados"),
+          actions: [
+            TextButton(
+              child: Text("Ok"),
+              onPressed: () => Navigator.pop(context),
+            )
+          ],
+        );
+      },
+    );
   }
 }

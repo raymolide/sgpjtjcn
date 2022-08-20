@@ -170,6 +170,14 @@ class _MyDrawerState extends State<MyDrawer> {
                           content: MySettings()),
                     ),
                   ),
+                  ListTile(
+                    title: const Text('Sair',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    hoverColor: primary,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                  )
                 ],
               );
             }),

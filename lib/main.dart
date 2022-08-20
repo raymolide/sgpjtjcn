@@ -41,5 +41,6 @@ Future<void> main() async {
             '/entradas': (context) => Entradas(),
             '/perfil': (context) => Perfil(),
           },
+          initialRoute: '/login',
           home: Login())));
 }
