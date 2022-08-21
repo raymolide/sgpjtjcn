@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sgpjtjcn/model/person.dart';
+import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/screen/view_process.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 import 'package:intl/intl.dart';
@@ -78,9 +80,34 @@ class DataSource extends DataTableSource {
 
   DataSource(this.context, this.pesquisa) {
     _rows = <RowTable>[];
-    List<Process> processos =
-        Provider.of<ProcessRepository>(context, listen: false).getAll();
+    PersonRepository personRepository =
+        Provider.of<PersonRepository>(context, listen: false);
+    ProcessRepository processRepository =
+        Provider.of<ProcessRepository>(context, listen: false);
+    List<Process> processos = [];
+    Person pessoa = personRepository.pessoas
+        .where((element) => element.email == personRepository.email)
+        .first;
 
+    if (pessoa.tipo.toLowerCase() == "parte") {
+      print("pessoa: $pessoa");
+      bool exist = processRepository.getAll().any((element) =>
+          element.emailRequerente == personRepository.email ||
+          element.emailRequerido == personRepository.email);
+      print(exist);
+      if (exist) {
+        processos = processRepository
+            .getAll()
+            .where((element) =>
+                element.emailRequerente == personRepository.email ||
+                element.emailRequerido == personRepository.email)
+            .toList();
+      } else {
+        print("processos nao encontrados");
+      }
+    } else {
+      processos = processRepository.getAll();
+    }
     if (processos.isNotEmpty) {
       for (var element in processos) {
         _rows!.add(RowTable(element.nprocess, element.requerido,

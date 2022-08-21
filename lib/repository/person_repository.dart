@@ -20,9 +20,11 @@ class PersonRepository extends ChangeNotifier {
 
     dados.forEach((value) {
       try {
-        pessoas.add(Person.fromJsonFire(value));
+        if (value != null) {
+          pessoas.add(Person.fromJsonFire(value));
+        }
       } catch (e) {
-        print("Erro: $e");
+        print("Person Error: $e");
       }
     });
 

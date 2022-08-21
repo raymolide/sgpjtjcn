@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sgpjtjcn/model/person.dart';
 import 'package:sgpjtjcn/model/requerimento.dart';
 import 'package:sgpjtjcn/model/rowRequerimento.dart';
+import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/repository/requerimento_repository.dart';
 import 'package:sgpjtjcn/screen/view_process.dart';
 import 'package:sgpjtjcn/util/constants.dart';
@@ -78,8 +80,23 @@ class DataSource extends DataTableSource {
 
   DataSource(this.context, this.pesquisa) {
     _rows = <RowTableReq>[];
-    List<Requerimento> requerimentos =
-        Provider.of<RequerimentoRepository>(context, listen: false).getAll();
+    PersonRepository personRepository =
+        Provider.of<PersonRepository>(context, listen: false);
+    List<Requerimento> requerimentos = [];
+    RequerimentoRepository reqRepository =
+        Provider.of<RequerimentoRepository>(context, listen: false);
+    Person pessoa = personRepository.pessoas
+        .where((element) => element.email == personRepository.email)
+        .first;
+
+    if (pessoa.tipo.toLowerCase() == "parte") {
+      requerimentos = reqRepository
+          .getAll()
+          .where((element) => element.email == personRepository.email)
+          .toList();
+    } else {
+      requerimentos = reqRepository.getAll();
+    }
 
     if (requerimentos.isNotEmpty) {
       for (var element in requerimentos) {

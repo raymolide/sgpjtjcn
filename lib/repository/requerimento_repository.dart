@@ -17,9 +17,11 @@ class RequerimentoRepository extends ChangeNotifier {
 
     dados.forEach((value) {
       try {
-        requerimentos.add(Requerimento.fromJsonFire(value));
+        if (value != null) {
+          requerimentos.add(Requerimento.fromJsonFire(value));
+        }
       } catch (e) {
-        print("Erro: $e");
+        print("Requerimento Error: $e");
       }
     });
 

@@ -34,6 +34,8 @@ class _ViewProcessState extends State<ViewProcess> {
   TextEditingController controllerAdvogadoRequerido = TextEditingController();
   TextEditingController controllerAdvogadoRequerente = TextEditingController();
   TextEditingController controllerEstado = TextEditingController();
+  TextEditingController controllerEmailRequerido = TextEditingController();
+  TextEditingController controllerEmailRequerente = TextEditingController();
 
   var area = ['Processo Civil', 'Processo Penal'];
   String areaActuacao = "Processo Civil";
@@ -65,6 +67,8 @@ class _ViewProcessState extends State<ViewProcess> {
       controllerSeccao.text = processo.seccao;
       controllerAdvogadoRequerido.text = processo.advogadoRequerido;
       controllerAdvogadoRequerente.text = processo.advogadoRequerente;
+      controllerEmailRequerente.text = processo.emailRequerente;
+      controllerEmailRequerido.text = processo.emailRequerido;
       controllerEstado.text = processo.estado;
     } else {
       clearFields();
@@ -86,6 +90,8 @@ class _ViewProcessState extends State<ViewProcess> {
     controllerSeccao.text = "";
     controllerAdvogadoRequerido.text = "";
     controllerAdvogadoRequerente.text = "";
+    controllerEmailRequerido.text = "";
+    controllerEmailRequerente.text = "";
     controllerEstado.text = "";
   }
 
@@ -105,6 +111,8 @@ class _ViewProcessState extends State<ViewProcess> {
         controllerSeccao.text,
         controllerAdvogadoRequerido.text,
         controllerAdvogadoRequerente.text,
+        controllerEmailRequerente.text,
+        controllerEmailRequerido.text,
         "");
   }
 

@@ -50,7 +50,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       .first;
                   if (pessoa.tipo.toLowerCase() == "parte") {
                     isFuncionario = false;
-                    print("not FUNCIONARIO");
+                    print("Não é FUNCIONARIO");
                   } else {
                     isFuncionario = true;
                     print("FUNCIONARIO");
@@ -95,6 +95,18 @@ class _MyDrawerState extends State<MyDrawer> {
                       ? ListTile(
                           title: const Text(
                             'Entradas',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          hoverColor: primary,
+                          onTap: () {
+                            Navigator.pushNamed(context, '/entradas');
+                          },
+                        )
+                      : Container(),
+                  !isFuncionario
+                      ? ListTile(
+                          title: const Text(
+                            'Minhas Entradas',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           hoverColor: primary,

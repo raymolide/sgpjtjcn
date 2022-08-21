@@ -32,6 +32,8 @@ class _CreateProcessState extends State<CreateProcess> {
   TextEditingController controllerSeccao = TextEditingController();
   TextEditingController controllerAdvogadoRequerido = TextEditingController();
   TextEditingController controllerAdvogadoRequerente = TextEditingController();
+  TextEditingController controllerEmailRequerido = TextEditingController();
+  TextEditingController controllerEmailRequerente = TextEditingController();
   TextEditingController controllerEstado = TextEditingController();
 
   var area = ['Processo Civil', 'Processo Penal'];
@@ -65,6 +67,8 @@ class _CreateProcessState extends State<CreateProcess> {
     controllerAdvogadoRequerido.text = "";
     controllerAdvogadoRequerente.text = "";
     controllerEstado.text = "";
+    controllerEmailRequerido.text = "";
+    controllerEmailRequerente.text = "";
   }
 
   Process criarProcesso() {
@@ -82,6 +86,8 @@ class _CreateProcessState extends State<CreateProcess> {
         controllerSeccao.text,
         controllerAdvogadoRequerido.text,
         controllerAdvogadoRequerente.text,
+        controllerEmailRequerente.text,
+        controllerEmailRequerido.text,
         "0");
   }
 

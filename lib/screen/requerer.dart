@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sgpjtjcn/model/person.dart';
 import 'package:sgpjtjcn/model/requerimento.dart';
+import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/repository/requerimento_repository.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 import 'package:sgpjtjcn/widgets/appBar.dart';
@@ -30,12 +32,15 @@ class _RequererState extends State<Requerer> {
   void initState() {
     fetchData =
         Provider.of<RequerimentoRepository>(context, listen: false).getData();
+    controllerEstado.text = "Enviado";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    PersonRepository repository =
+        Provider.of<PersonRepository>(context, listen: false);
     return Scaffold(
       appBar:
           AppBar(backgroundColor: primary, actions: [appBarActions(context)]),
@@ -132,8 +137,14 @@ class _RequererState extends State<Requerer> {
                                                       corpo:
                                                           controllerRequerimento
                                                               .text,
-                                                      estado: controllerEstado
-                                                          .text);
+                                                      estado:
+                                                          controllerEstado.text,
+                                                      email: repository.email,
+                                                      nome: buscarNomeCompleto(
+                                                          repository.email,
+                                                          repository.pessoas));
+                                                  print(
+                                                      "email: ${repository.email}, nome: ${buscarNomeCompleto(repository.email, repository.pessoas)}");
 
                                                   Provider.of<RequerimentoRepository>(
                                                           context,
@@ -169,5 +180,14 @@ class _RequererState extends State<Requerer> {
             }
           }),
     );
+  }
+
+  String buscarNomeCompleto(String email, List<Person> pessoas) {
+    String nomeCompleto = "";
+    if (pessoas.any((element) => element.email == email)) {
+      Person pessoa = pessoas.where((element) => element.email == email).first;
+      nomeCompleto = pessoa.nome + " " + pessoa.apelido;
+    }
+    return nomeCompleto;
   }
 }

@@ -332,7 +332,6 @@ class _MySettingsState extends State<MySettings> {
                                       .doc();
                                   await reqRef.set(mapPessoa);
                                 }
-
                                 Navigator.popAndPushNamed(context, "/pending");
                               }, _formKey, splashColor: Colors.white)
                             ],

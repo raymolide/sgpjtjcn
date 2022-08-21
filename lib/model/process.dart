@@ -14,6 +14,8 @@ class Process {
   final String seccao;
   final String advogadoRequerido;
   final String advogadoRequerente;
+  final String emailRequerente;
+  final String emailRequerido;
   final String incremento;
 
   Process(
@@ -30,6 +32,8 @@ class Process {
       this.seccao,
       this.advogadoRequerido,
       this.advogadoRequerente,
+      this.emailRequerente,
+      this.emailRequerido,
       this.incremento);
 
   Process copyWith(
@@ -46,6 +50,8 @@ class Process {
       String? seccao,
       String? advogadoRequerido,
       String? advogadoRequerente,
+      String? emailRequerente,
+      String? emailRequerido,
       String? incremento}) {
     return Process(
         nprocess ?? this.nprocess,
@@ -61,6 +67,8 @@ class Process {
         seccao ?? this.seccao,
         advogadoRequerido ?? this.advogadoRequerido,
         advogadoRequerente ?? this.advogadoRequerente,
+        emailRequerente ?? this.emailRequerente,
+        emailRequerido ?? this.emailRequerido,
         incremento ?? this.incremento);
   }
 
@@ -79,6 +87,8 @@ class Process {
       'seccao': seccao,
       'advogadoRequerido': advogadoRequerido,
       'advogadoRequerente': advogadoRequerente,
+      'emailRequerente': emailRequerente,
+      'emailRequerido': emailRequerido,
       'incremento': incremento
     };
   }
@@ -97,6 +107,8 @@ class Process {
       json['seccao'],
       json['advogadoRequerido'],
       json['advogadoRequerente'],
+      json['emailRequerente'],
+      json['emailRequerido'],
       json['incremento']);
 
   Process.fromJsonFire(Map<String, dynamic> json)
@@ -113,6 +125,8 @@ class Process {
         seccao = json['seccao'],
         advogadoRequerido = json['advogadoRequerido'],
         advogadoRequerente = json['advogadoRequerente'],
+        emailRequerente = json['emailRequerente'],
+        emailRequerido = json['emailRequerido'],
         incremento = json['incremento'];
 
   Process fromJsonF(Map<String, dynamic> json) => copyWith(
@@ -129,6 +143,8 @@ class Process {
       seccao: json['seccao'],
       advogadoRequerido: json['advogadoRequerido'],
       advogadoRequerente: json['advogadoRequerente'],
+      emailRequerente: json['emailRequerente'],
+      emailRequerido: json['emailRequerido'],
       incremento: json['incremento']);
 
   factory Process.fromMap(Map<String, dynamic> map) {
@@ -146,6 +162,8 @@ class Process {
       map['seccao'] ?? '',
       map['advogadoRequerido'] ?? '',
       map['advogadoRequerente'] ?? '',
+      map['emailRequerente'] ?? '',
+      map['emailRequerente'] ?? '',
       map['incremento'] ?? '',
     );
   }

@@ -17,9 +17,11 @@ class ProcessRepository extends ChangeNotifier {
 
     dados.forEach((value) {
       try {
-        processos.add(Process.fromJsonFire(value));
+        if (value != null) {
+          processos.add(Process.fromJsonFire(value));
+        }
       } catch (e) {
-        print("Erro: $e");
+        print("Process Error: $e");
       }
     });
 
