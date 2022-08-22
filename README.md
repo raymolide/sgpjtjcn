@@ -4,10 +4,10 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application for web.
 
 Hello, Welcome to my github.
-I am Mobile Developer for Flutter, Web dev for vb.net and learning .Net/.
+I am Mobile Developer for Flutter, Web dev for vb.net and learning .Net.
 
 ## 🛠 &nbsp; Tech Stack
 ![Flutter](https://img.shields.io/badge/Flutter-Mobile_Developer-blue)
