@@ -80,11 +80,12 @@ class _MySettingsState extends State<MySettings> {
                       (int.parse(pessoas.last.codigo) + 1).toString();
                   String email = repository.email;
                   if (pessoas.any((element) => element.email == email)) {
-                    print('carregar dados $email ');
                     preencherDados(pessoas
                         .where((element) => element.email == email)
                         .first);
                   }
+                } else {
+                  controllerCodigo.text = "1";
                 }
 
                 return SingleChildScrollView(
@@ -253,30 +254,33 @@ class _MySettingsState extends State<MySettings> {
                               "Tipo de conta",
                               style: TextStyle(color: primary),
                             ),
-                            DropdownButtonHideUnderline(
-                              child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 14.0, right: 14),
-                                  child: DropdownButton(
-                                    hint: Text(perfil),
-                                    style: Theme.of(context).textTheme.button,
-                                    alignment: AlignmentDirectional.bottomEnd,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    value: perfil,
-                                    items: perfils.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        perfil = value!;
-                                        controllerTipo.text = perfil;
-                                      });
-                                    },
+                            IgnorePointer(
+                              child: DropdownButtonHideUnderline(
+                                child: ButtonTheme(
+                                  alignedDropdown: true,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 14.0, right: 14),
+                                    child: DropdownButton(
+                                      hint: Text(perfil),
+                                      style: Theme.of(context).textTheme.button,
+                                      alignment: AlignmentDirectional.bottomEnd,
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                      value: perfil,
+                                      items: perfils.map((String items) {
+                                        return DropdownMenuItem(
+                                          value: items,
+                                          child: Text(items),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          perfil = value!;
+                                          controllerTipo.text = perfil;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -320,16 +324,15 @@ class _MySettingsState extends State<MySettings> {
                                       pessoa.toMap();
                                   final reqRef = FirebaseFirestore.instance
                                       .collection('person')
-                                      .doc();
+                                      .doc(pessoa.codigo);
                                   await reqRef.update(mapPessoa);
-                                  alertaError(context);
                                 } else {
                                   repository.addPerson(pessoa);
                                   Map<String, dynamic> mapPessoa =
                                       pessoa.toMap();
                                   final reqRef = FirebaseFirestore.instance
                                       .collection('person')
-                                      .doc();
+                                      .doc(pessoa.codigo);
                                   await reqRef.set(mapPessoa);
                                 }
                                 Navigator.popAndPushNamed(context, "/pending");

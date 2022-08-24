@@ -50,10 +50,8 @@ class _MyDrawerState extends State<MyDrawer> {
                       .first;
                   if (pessoa.tipo.toLowerCase() == "parte") {
                     isFuncionario = false;
-                    print("Não é FUNCIONARIO");
                   } else {
                     isFuncionario = true;
-                    print("FUNCIONARIO");
                   }
                 }
               }

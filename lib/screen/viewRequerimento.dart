@@ -12,14 +12,15 @@ import 'package:sgpjtjcn/widgets/button.dart';
 import 'package:sgpjtjcn/widgets/drawer.dart';
 import 'package:sgpjtjcn/widgets/textField.dart';
 
-class Requerer extends StatefulWidget {
-  Requerer({Key? key}) : super(key: key);
+class ViewRequerimento extends StatefulWidget {
+  final String nRequerimento;
+  ViewRequerimento({Key? key, required this.nRequerimento}) : super(key: key);
 
   @override
-  State<Requerer> createState() => _RequererState();
+  State<ViewRequerimento> createState() => _ViewRequerimentoState();
 }
 
-class _RequererState extends State<Requerer> {
+class _ViewRequerimentoState extends State<ViewRequerimento> {
   final _formKey = GlobalKey<FormState>();
   int codigo = 1;
   TextEditingController controllerCodigo = TextEditingController();
@@ -28,6 +29,7 @@ class _RequererState extends State<Requerer> {
   TextEditingController controllerMotivo = TextEditingController();
 
   late Future<List<Requerimento>> fetchData;
+  late Requerimento req;
 
   @override
   void initState() {
@@ -35,7 +37,6 @@ class _RequererState extends State<Requerer> {
         Provider.of<RequerimentoRepository>(context, listen: false).getData();
     Provider.of<ProcessRepository>(context, listen: false).getData();
     Provider.of<RequerimentoRepository>(context, listen: false).getData();
-    controllerEstado.text = "Enviado";
     super.initState();
   }
 
@@ -59,11 +60,22 @@ class _RequererState extends State<Requerer> {
               return Center(child: CircularProgressIndicator());
             } else {
               if (snapshot.data!.isNotEmpty) {
-                List<Requerimento> codigos = snapshot.data!;
-                codigos.sort(((a, b) => int.parse(a.nRequerimento)
+                List<Requerimento> requerimentos = snapshot.data!;
+                requerimentos.sort(((a, b) => int.parse(a.nRequerimento)
                     .compareTo(int.parse(b.nRequerimento))));
 
-                codigo = int.parse(codigos.last.nRequerimento) + 1;
+                codigo = int.parse(requerimentos.last.nRequerimento) + 1;
+
+                req = requerimentos
+                    .where((element) =>
+                        element.nRequerimento == widget.nRequerimento)
+                    .first;
+
+                controllerCodigo.text = req.nRequerimento;
+                controllerEstado.text =
+                    (req.estado != null) ? req.estado : "Pendente";
+                controllerMotivo.text = req.motivo;
+                controllerRequerimento.text = req.corpo;
               }
               return SafeArea(
                   child: Container(
@@ -93,12 +105,14 @@ class _RequererState extends State<Requerer> {
                                             children: [
                                               SizedBox(
                                                 width: size.width * .6,
-                                                child: textFieldFormParecer(
-                                                    'Motivo',
-                                                    Icon(Icons.person,
-                                                        color: primary),
-                                                    controller:
-                                                        controllerMotivo),
+                                                child: IgnorePointer(
+                                                  child: textFieldFormParecer(
+                                                      'Motivo',
+                                                      Icon(Icons.person,
+                                                          color: primary),
+                                                      controller:
+                                                          controllerMotivo),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -107,13 +121,15 @@ class _RequererState extends State<Requerer> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Expanded(
-                                                child: textFieldFormParecer(
-                                                    'Requerimento',
-                                                    Icon(Icons.assignment,
-                                                        color: primary),
-                                                    controller:
-                                                        controllerRequerimento,
-                                                    linhas: 7),
+                                                child: IgnorePointer(
+                                                  child: textFieldFormParecer(
+                                                      'Requerimento',
+                                                      Icon(Icons.assignment,
+                                                          color: primary),
+                                                      controller:
+                                                          controllerRequerimento,
+                                                      linhas: 7),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -126,46 +142,32 @@ class _RequererState extends State<Requerer> {
                                               children: [
                                                 circleBtn(
                                                     const Icon(
-                                                      Icons.delete,
+                                                      Icons.back_hand,
                                                       color: Colors.white,
-                                                    ),
-                                                    () {},
+                                                    ), () {
+                                                  req.estado = "Indeferido";
+                                                  final reqRef =
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'requerimento')
+                                                          .doc(
+                                                              req.nRequerimento)
+                                                          .update(req.toMap());
+                                                },
+                                                    label: "Parar",
                                                     splashColor: Colors.blue),
                                                 circleBtnForm(
                                                     const Icon(Icons.send,
                                                         color: Colors.white),
                                                     () async {
-                                                  Requerimento req = Requerimento(
-                                                      nRequerimento: "$codigo",
-                                                      motivo:
-                                                          controllerMotivo.text,
-                                                      corpo:
-                                                          controllerRequerimento
-                                                              .text,
-                                                      estado:
-                                                          controllerEstado.text,
-                                                      email: repository.email,
-                                                      nome: buscarNomeCompleto(
-                                                          repository.email,
-                                                          repository.pessoas));
-
-                                                  Provider.of<RequerimentoRepository>(
-                                                          context,
-                                                          listen: false)
-                                                      .addRequerimento(req);
-
-                                                  Map<String, dynamic> mapReq =
-                                                      req.toMap();
-
+                                                  req.estado = "Deferido";
                                                   final reqRef =
-                                                      FirebaseFirestore
-                                                          .instance
+                                                      FirebaseFirestore.instance
                                                           .collection(
                                                               'requerimento')
-                                                          .doc(codigo
-                                                              .toString());
-                                                  await reqRef.set(mapReq);
-
+                                                          .doc(
+                                                              req.nRequerimento)
+                                                          .update(req.toMap());
                                                   Navigator.popAndPushNamed(
                                                       context, '/entradas');
                                                 }, _formKey,

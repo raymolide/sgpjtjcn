@@ -54,6 +54,7 @@ class _PendentesState extends State<Pendentes> {
                   ],
                 ));
               }
+
               return SafeArea(
                   child: Container(
                       color: secundaria,

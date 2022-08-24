@@ -4,12 +4,37 @@ import 'dart:convert';
 import 'package:sgpjtjcn/model/required.dart';
 
 class Requerimento {
-  final String nRequerimento;
-  final String motivo;
-  final String corpo;
-  final String nome;
-  final String email;
-  final String? estado;
+  String nRequerimento;
+  String motivo;
+  String corpo;
+  String nome;
+  String email;
+  String estado;
+
+  get getNRequerimento => this.nRequerimento;
+
+  set setNRequerimento(String nRequerimento) =>
+      this.nRequerimento = nRequerimento;
+
+  get getMotivo => this.motivo;
+
+  set setMotivo(String motivo) => this.motivo = motivo;
+
+  get getCorpo => this.corpo;
+
+  set setCorpo(corpo) => this.corpo = corpo;
+
+  get getNome => this.nome;
+
+  set setNome(String nome) => this.nome = nome;
+
+  get getEmail => this.email;
+
+  set setEmail(String email) => this.email = email;
+
+  get getEstado => this.estado;
+
+  set setEstado(String estado) => this.estado = estado;
 
   Requerimento({
     required this.nRequerimento,
@@ -17,7 +42,7 @@ class Requerimento {
     required this.corpo,
     required this.nome,
     required this.email,
-    this.estado,
+    required this.estado,
   });
 
   Requerimento copyWith({

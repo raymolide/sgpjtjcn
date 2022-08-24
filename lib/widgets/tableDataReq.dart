@@ -4,6 +4,7 @@ import 'package:sgpjtjcn/model/requerimento.dart';
 import 'package:sgpjtjcn/model/rowRequerimento.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/repository/requerimento_repository.dart';
+import 'package:sgpjtjcn/screen/viewRequerimento.dart';
 import 'package:sgpjtjcn/screen/view_process.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 import 'package:intl/intl.dart';
@@ -139,11 +140,12 @@ class DataSource extends DataTableSource {
             style: TextStyle(color: Colors.blue[600]),
           ),
           onPressed: () {
-            String nprocess = row.valueA;
+            String nReq = row.valueA;
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ViewProcess(nprocesso: nprocess)));
+                    builder: (context) =>
+                        ViewRequerimento(nRequerimento: nReq)));
           },
         )),
         DataCell(Text(row.valueB)),

@@ -90,11 +90,10 @@ class DataSource extends DataTableSource {
         .first;
 
     if (pessoa.tipo.toLowerCase() == "parte") {
-      print("pessoa: $pessoa");
       bool exist = processRepository.getAll().any((element) =>
           element.emailRequerente == personRepository.email ||
           element.emailRequerido == personRepository.email);
-      print(exist);
+
       if (exist) {
         processos = processRepository
             .getAll()

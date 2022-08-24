@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,7 @@ import 'package:sgpjtjcn/screen/register.dart';
 import 'package:sgpjtjcn/screen/report.dart';
 import 'package:sgpjtjcn/screen/requerer.dart';
 import 'package:sgpjtjcn/screen/settings.dart';
+import 'package:sgpjtjcn/screen/viewRequerimento.dart';
 import 'package:sgpjtjcn/screen/view_process.dart';
 
 Future<void> main() async {
@@ -40,6 +43,8 @@ Future<void> main() async {
             '/report': (context) => Report(),
             '/entradas': (context) => Entradas(),
             '/perfil': (context) => Perfil(),
+            '/viewRequerimento': (context) =>
+                ViewRequerimento(nRequerimento: '')
           },
           initialRoute: '/login',
           home: Login())));

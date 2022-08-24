@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -270,14 +271,19 @@ class _ViewProcessState extends State<ViewProcess> {
                                     .isExistenteProcess(
                                         controllerNProcesso.text);
 
+                                Process processo = criarProcesso();
                                 if (existe) {
-                                  Provider.of<ProcessRepository>(context,
-                                          listen: false)
-                                      .updateProcess(criarProcesso());
+                                  final reqRef = FirebaseFirestore.instance
+                                      .collection('process')
+                                      .doc(processo.nprocess)
+                                      .update(processo.toMap());
+                                  Navigator.popAndPushNamed(
+                                      context, '/pending');
                                 } else {
-                                  Provider.of<ProcessRepository>(context,
-                                          listen: false)
-                                      .addProcess(criarProcesso());
+                                  final reqRef = FirebaseFirestore.instance
+                                      .collection('process')
+                                      .doc(processo.nprocess)
+                                      .set(processo.toMap());
                                 }
                               }, splashColor: Colors.green)
                             ],
