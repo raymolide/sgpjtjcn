@@ -10,6 +10,7 @@ import 'package:sgpjtjcn/repository/requerimento_repository.dart';
 import 'package:sgpjtjcn/screen/create_process.dart';
 import 'package:sgpjtjcn/screen/entradas.dart';
 import 'package:sgpjtjcn/screen/login.dart';
+import 'package:sgpjtjcn/screen/managerAdmin.dart';
 import 'package:sgpjtjcn/screen/pendentes.dart';
 import 'package:sgpjtjcn/screen/perfil.dart';
 import 'package:sgpjtjcn/screen/register.dart';
@@ -44,7 +45,8 @@ Future<void> main() async {
             '/entradas': (context) => Entradas(),
             '/perfil': (context) => Perfil(),
             '/viewRequerimento': (context) =>
-                ViewRequerimento(nRequerimento: '')
+                ViewRequerimento(nRequerimento: ''),
+            '/paneladmin': (context) => AdminPanel()
           },
           initialRoute: '/login',
           home: Login())));

@@ -143,9 +143,11 @@ class _ViewProcessState extends State<ViewProcess> {
                           children: [
                             SizedBox(
                               width: size.width * .15,
-                              child: textField('NProcesso',
-                                  Icon(Icons.person, color: primary),
-                                  controller: controllerNProcesso),
+                              child: IgnorePointer(
+                                child: textField('NProcesso',
+                                    Icon(Icons.person, color: primary),
+                                    controller: controllerNProcesso),
+                              ),
                             ),
                             SizedBox(width: size.width * .01),
                             Expanded(

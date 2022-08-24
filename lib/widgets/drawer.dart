@@ -6,6 +6,7 @@ import 'package:sgpjtjcn/model/person.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/repository/process_repository.dart';
 import 'package:sgpjtjcn/repository/requerimento_repository.dart';
+import 'package:sgpjtjcn/screen/managerAdmin.dart';
 import 'package:sgpjtjcn/screen/settings.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 
@@ -180,6 +181,16 @@ class _MyDrawerState extends State<MyDrawer> {
                           content: MySettings()),
                     ),
                   ),
+                  isFuncionario
+                      ? ListTile(
+                          title: const Text('Painel Admin',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          hoverColor: primary,
+                          onTap: () {
+                            Navigator.pushNamed(context, '/paneladmin');
+                          },
+                        )
+                      : Container(),
                   ListTile(
                     title: const Text('Sair',
                         style: TextStyle(fontWeight: FontWeight.bold)),
