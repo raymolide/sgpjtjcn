@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sgpjtjcn/model/process.dart';
 import 'package:sgpjtjcn/repository/process_repository.dart';
@@ -54,6 +55,8 @@ class _CreateProcessState extends State<CreateProcess> {
     clearFields();
     fetchData =
         Provider.of<ProcessRepository>(context, listen: false).getData();
+    controllerDataEntrada.text = DateFormat.yMd().format(DateTime.now());
+    controllerEstado.text = "Pendente";
     super.initState();
   }
 
@@ -79,7 +82,7 @@ class _CreateProcessState extends State<CreateProcess> {
     return Process(
         controllerNProcesso.text,
         controllerEstado.text,
-        DateTime.now().toString(),
+        controllerDataEntrada.text,
         controllerTipo.text,
         controllerAreaActuacao.text,
         controllerRequerido.text,
@@ -119,6 +122,7 @@ class _CreateProcessState extends State<CreateProcess> {
                   codigo = int.parse(codigos.last.nprocess) + 1;
                 }
                 controllerNProcesso.text = codigo.toString();
+
                 return SafeArea(
                   child: Container(
                     height: size.height - AppBar().preferredSize.height,
@@ -170,6 +174,26 @@ class _CreateProcessState extends State<CreateProcess> {
                                         child: textField('Nome Requerente',
                                             Icon(Icons.person, color: primary),
                                             controller: controllerRequerente),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: size.height * .02),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: textField('Email Requerido',
+                                            Icon(Icons.person, color: primary),
+                                            controller:
+                                                controllerEmailRequerido),
+                                      ),
+                                      SizedBox(width: size.width * .01),
+                                      Expanded(
+                                        child: textField('Email Requerente',
+                                            Icon(Icons.person, color: primary),
+                                            controller:
+                                                controllerEmailRequerente),
                                       ),
                                     ],
                                   ),
@@ -268,6 +292,8 @@ class _CreateProcessState extends State<CreateProcess> {
                                                   onChanged: (String? value) {
                                                     setState(() {
                                                       tipoProcesso = value!;
+                                                      controllerTipo.text =
+                                                          value;
                                                     });
                                                   },
                                                 ),
@@ -311,6 +337,8 @@ class _CreateProcessState extends State<CreateProcess> {
                                                   onChanged: (String? value) {
                                                     setState(() {
                                                       areaActuacao = value!;
+                                                      controllerAreaActuacao
+                                                          .text = value;
                                                     });
                                                   },
                                                 ),

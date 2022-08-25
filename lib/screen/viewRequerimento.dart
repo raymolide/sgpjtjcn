@@ -22,13 +22,14 @@ class ViewRequerimento extends StatefulWidget {
 
 class _ViewRequerimentoState extends State<ViewRequerimento> {
   final _formKey = GlobalKey<FormState>();
-  int codigo = 1;
+
   TextEditingController controllerCodigo = TextEditingController();
   TextEditingController controllerRequerimento = TextEditingController();
   TextEditingController controllerEstado = TextEditingController();
   TextEditingController controllerMotivo = TextEditingController();
 
   late Future<List<Requerimento>> fetchData;
+  int codigo = 1;
   late Requerimento req;
 
   @override

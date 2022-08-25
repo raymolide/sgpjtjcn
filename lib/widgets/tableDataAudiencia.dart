@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:sgpjtjcn/model/audiencia.dart';
 import 'package:sgpjtjcn/model/person.dart';
+import 'package:sgpjtjcn/model/requerimento.dart';
+import 'package:sgpjtjcn/model/rowAudiencia.dart';
+import 'package:sgpjtjcn/model/rowRequerimento.dart';
+import 'package:sgpjtjcn/repository/audiencia_repository.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
+import 'package:sgpjtjcn/repository/requerimento_repository.dart';
+import 'package:sgpjtjcn/screen/viewRequerimento.dart';
 import 'package:sgpjtjcn/screen/view_process.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:sgpjtjcn/model/process.dart';
 import 'package:sgpjtjcn/model/row.dart';
-import 'package:sgpjtjcn/repository/process_repository.dart';
 
-class TableData extends StatefulWidget {
-  TableData({Key? key, String? pesquisa}) : super(key: key);
+class TableDataAudiencia extends StatefulWidget {
+  TableDataAudiencia({Key? key, String? pesquisa}) : super(key: key);
   String? pesquisa;
   @override
-  State<TableData> createState() => _TableDataState();
+  State<TableDataAudiencia> createState() => _TableDataState();
 }
 
-class _TableDataState extends State<TableData> {
+class _TableDataState extends State<TableDataAudiencia> {
   String pesquisa = "";
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class _TableDataState extends State<TableData> {
               header: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text('Processos Pendentes'),
+                  Text('Audiencias Marcadas'),
                 ],
               ),
               rowsPerPage: 10,
@@ -50,18 +55,19 @@ class _TableDataState extends State<TableData> {
                         ),
                         filled: true,
                         hintStyle: TextStyle(color: Colors.grey[800]),
-                        hintText: "Pesquisar Processo",
+                        hintText: "Pesquisar Audiencia",
                         fillColor: secundaria),
                   ),
                 )
               ],
               columns: const [
-                DataColumn(label: Text('NProcesso')),
+                DataColumn(label: Text('Codigo')),
+                DataColumn(label: Text('Titulo')),
+                DataColumn(label: Text('Sala')),
+                DataColumn(label: Text('Nr. Lugares')),
+                DataColumn(label: Text('Data')),
                 DataColumn(label: Text('Requerido')),
                 DataColumn(label: Text('Requerente')),
-                DataColumn(label: Text('Data Entrada')),
-                DataColumn(label: Text('Título')),
-                DataColumn(label: Text('Estado')),
               ],
               source: DataSource(context, pesquisa),
             ),
@@ -75,48 +81,43 @@ class _TableDataState extends State<TableData> {
 class DataSource extends DataTableSource {
   String pesquisa = "";
   final BuildContext context;
-  List<RowTable>? _rows;
+  List<RowTableAudiencia>? _rows;
   int _selectedCount = 0;
   DateFormat formater = DateFormat('dd-MM-yyyy');
 
   DataSource(this.context, this.pesquisa) {
-    _rows = <RowTable>[];
+    _rows = <RowTableAudiencia>[];
     PersonRepository personRepository =
         Provider.of<PersonRepository>(context, listen: false);
-    ProcessRepository processRepository =
-        Provider.of<ProcessRepository>(context, listen: false);
-    List<Process> processos = [];
+
+    List<Audiencia> audiencia = [];
+    AudienciaRepository audienciaRepository =
+        Provider.of<AudienciaRepository>(context, listen: false);
     Person pessoa = personRepository.pessoas
         .where((element) => element.email == personRepository.email)
         .first;
 
     if (pessoa.tipo.toLowerCase() == "parte") {
-      bool exist = processRepository.getAll().any((element) =>
-          element.emailRequerente == personRepository.email ||
-          element.emailRequerido == personRepository.email);
-
-      if (exist) {
-        processos = processRepository
-            .getAll()
-            .where((element) =>
-                element.emailRequerente == personRepository.email ||
-                element.emailRequerido == personRepository.email)
-            .toList();
-      } else {
-        print("processos nao encontrados");
-      }
+      audiencia = audienciaRepository
+          .getAll()
+          .where((element) =>
+              element.emailRequerente == personRepository.email ||
+              element.emailRequerido == personRepository.email)
+          .toList();
     } else {
-      processos = processRepository.getAll();
+      audiencia = audienciaRepository.getAll();
     }
-    if (processos.isNotEmpty) {
-      for (var element in processos) {
-        _rows!.add(RowTable(
-            element.nprocess,
-            element.requerido,
-            element.requerente,
-            element.dataInicio,
+
+    if (audiencia.isNotEmpty) {
+      for (var element in audiencia) {
+        _rows!.add(RowTableAudiencia(
+            element.codigo,
             element.titulo,
-            element.estado));
+            element.sala,
+            element.nrLugares,
+            element.data,
+            element.emailRequerido,
+            element.emailRequerente));
       }
     }
 
@@ -154,18 +155,15 @@ class DataSource extends DataTableSource {
             style: TextStyle(color: Colors.blue[600]),
           ),
           onPressed: () {
-            String nprocess = row.valueA;
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ViewProcess(nprocesso: nprocess)));
+            String nReq = row.valueA;
           },
         )),
         DataCell(Text(row.valueB)),
         DataCell(Text(row.valueC)),
         DataCell(Text(row.valueD)),
         DataCell(Text(row.valueE)),
-        DataCell(Text(row.valueF))
+        DataCell(Text(row.valueF)),
+        DataCell(Text(row.valueG)),
       ],
     );
   }

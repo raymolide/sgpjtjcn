@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
 
@@ -26,6 +26,7 @@ class _PendentesState extends State<Pendentes> {
   void initState() {
     fetchData =
         Provider.of<ProcessRepository>(context, listen: false).getData();
+
     super.initState();
   }
 
@@ -85,13 +86,13 @@ class _PendentesState extends State<Pendentes> {
                                                     MainAxisAlignment
                                                         .spaceEvenly,
                                                 children: [
-                                                  circleBtn(
+                                                  /* circleBtn(
                                                       Icon(Icons.create,
                                                           color: secundaria),
                                                       () {
                                                     Navigator.pushNamed(
                                                         context, '/process');
-                                                  }, splashColor: Colors.white),
+                                                  }, splashColor: Colors.white),*/
                                                 ],
                                               ),
                                             ),

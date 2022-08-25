@@ -1,14 +1,14 @@
-import 'dart:js';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sgpjtjcn/firebase_options.dart';
+import 'package:sgpjtjcn/repository/audiencia_repository.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/repository/process_repository.dart';
 import 'package:sgpjtjcn/repository/requerimento_repository.dart';
 import 'package:sgpjtjcn/screen/create_process.dart';
 import 'package:sgpjtjcn/screen/entradas.dart';
+import 'package:sgpjtjcn/screen/listAudiencia.dart';
 import 'package:sgpjtjcn/screen/login.dart';
 import 'package:sgpjtjcn/screen/managerAdmin.dart';
 import 'package:sgpjtjcn/screen/pendentes.dart';
@@ -29,6 +29,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: ((context) => ProcessRepository())),
         ChangeNotifierProvider(create: ((context) => PersonRepository())),
+        ChangeNotifierProvider(create: ((context) => AudienciaRepository())),
         ChangeNotifierProvider(create: ((context) => RequerimentoRepository()))
       ],
       child: MaterialApp(
@@ -41,12 +42,13 @@ Future<void> main() async {
             '/viewProcess': (context) => ViewProcess(nprocesso: ''),
             '/settings': (context) => MySettings(),
             '/process': (context) => const CreateProcess(),
-            '/report': (context) => Report(),
+            '/report': (context) => const Report(),
             '/entradas': (context) => Entradas(),
-            '/perfil': (context) => Perfil(),
+            '/audiencias': (context) => const ListAudiencias(),
+            '/perfil': (context) => const Perfil(),
             '/viewRequerimento': (context) =>
                 ViewRequerimento(nRequerimento: ''),
-            '/paneladmin': (context) => AdminPanel()
+            '/paneladmin': (context) => const AdminPanel()
           },
           initialRoute: '/login',
           home: Login())));

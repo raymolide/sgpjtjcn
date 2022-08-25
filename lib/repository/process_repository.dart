@@ -4,7 +4,6 @@ import 'package:sgpjtjcn/model/process.dart';
 
 class ProcessRepository extends ChangeNotifier {
   List<Process> processos = [];
-
   Future<List<Process>> getData() async {
     processos.clear();
     var db = FirebaseFirestore.instance;

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sgpjtjcn/model/process.dart';
 import 'package:sgpjtjcn/repository/process_repository.dart';
+import 'package:sgpjtjcn/screen/audiencia.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 import 'package:sgpjtjcn/widgets/appBar.dart';
 import 'package:sgpjtjcn/widgets/button.dart';
@@ -179,6 +180,23 @@ class _ViewProcessState extends State<ViewProcess> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
+                              child: textField('Email Requerido',
+                                  Icon(Icons.person, color: primary),
+                                  controller: controllerEmailRequerido),
+                            ),
+                            SizedBox(width: size.width * .01),
+                            Expanded(
+                              child: textField('Email Requerente',
+                                  Icon(Icons.person, color: primary),
+                                  controller: controllerEmailRequerente),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * .02),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
                               child: textField('Advogado Requerido',
                                   Icon(Icons.person, color: primary),
                                   controller: controllerAdvogadoRequerido),
@@ -252,42 +270,90 @@ class _ViewProcessState extends State<ViewProcess> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              circleBtn(
-                                  const Icon(
-                                    Icons.list_alt_outlined,
-                                    color: Colors.white,
-                                  ), () {
-                                Navigator.pushNamed(context, '/');
-                              }, splashColor: Colors.blue),
-                              circleBtn(
-                                  const Icon(Icons.delete, color: Colors.white),
-                                  () {
-                                clearFields();
-                              }, splashColor: Colors.red),
-                              circleBtn(
-                                  const Icon(Icons.save, color: Colors.white),
-                                  () {
-                                bool existe = Provider.of<ProcessRepository>(
-                                        context,
-                                        listen: false)
-                                    .isExistenteProcess(
-                                        controllerNProcesso.text);
+                              Column(
+                                children: [
+                                  circleBtn(
+                                      const Icon(
+                                        Icons.list_alt_outlined,
+                                        color: Colors.white,
+                                      ), () {
+                                    Navigator.pushNamed(context, '/pending');
+                                  }, splashColor: Colors.blue),
+                                  Text("Lista Pendentes")
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  circleBtn(
+                                      const Icon(Icons.edit,
+                                          color: Colors.white), () {
+                                    showDialog<String>(
+                                      barrierColor: secundaria,
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                              title: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Text('Audiencia'),
+                                                  InkWell(
+                                                    child: Icon(
+                                                      Icons.close_rounded,
+                                                      color: primary,
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                              content: Container(
+                                                  width: size.width * .8,
+                                                  height: size.height * .6,
+                                                  child: AudienciaScreen(
+                                                    titulo:
+                                                        controllerTitulo.text,
+                                                    emailRequerente:
+                                                        controllerEmailRequerente
+                                                            .text,
+                                                    emailRequerindo:
+                                                        controllerEmailRequerido
+                                                            .text,
+                                                  ))),
+                                    );
+                                  }, splashColor: Colors.red),
+                                  Text("Marcar Audiência")
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  circleBtn(
+                                      const Icon(Icons.save,
+                                          color: Colors.white), () {
+                                    bool existe =
+                                        Provider.of<ProcessRepository>(context,
+                                                listen: false)
+                                            .isExistenteProcess(
+                                                controllerNProcesso.text);
 
-                                Process processo = criarProcesso();
-                                if (existe) {
-                                  final reqRef = FirebaseFirestore.instance
-                                      .collection('process')
-                                      .doc(processo.nprocess)
-                                      .update(processo.toMap());
-                                  Navigator.popAndPushNamed(
-                                      context, '/pending');
-                                } else {
-                                  final reqRef = FirebaseFirestore.instance
-                                      .collection('process')
-                                      .doc(processo.nprocess)
-                                      .set(processo.toMap());
-                                }
-                              }, splashColor: Colors.green)
+                                    Process processo = criarProcesso();
+                                    if (existe) {
+                                      final reqRef = FirebaseFirestore.instance
+                                          .collection('process')
+                                          .doc(processo.nprocess)
+                                          .update(processo.toMap());
+                                    } else {
+                                      final reqRef = FirebaseFirestore.instance
+                                          .collection('process')
+                                          .doc(processo.nprocess)
+                                          .set(processo.toMap());
+                                    }
+                                  }, splashColor: Colors.green),
+                                  Text("Salvar")
+                                ],
+                              )
                             ],
                           ),
                         )

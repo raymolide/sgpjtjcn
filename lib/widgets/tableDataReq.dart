@@ -60,7 +60,7 @@ class _TableDataState extends State<TableDataReq> {
               columns: const [
                 DataColumn(label: Text('NRequeriento')),
                 DataColumn(label: Text('Motivo')),
-                DataColumn(label: Text('Requerimento')),
+                DataColumn(label: Text('Email Requerente')),
                 DataColumn(label: Text('Estado')),
               ],
               source: DataSource(context, pesquisa),
@@ -102,7 +102,7 @@ class DataSource extends DataTableSource {
     if (requerimentos.isNotEmpty) {
       for (var element in requerimentos) {
         _rows!.add(RowTableReq(element.nRequerimento, element.motivo,
-            element.corpo, element.estado.toString()));
+            element.email, element.estado.toString()));
       }
     }
 
