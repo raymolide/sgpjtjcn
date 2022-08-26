@@ -6,6 +6,7 @@ import 'package:sgpjtjcn/repository/audiencia_repository.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/repository/process_repository.dart';
 import 'package:sgpjtjcn/repository/requerimento_repository.dart';
+import 'package:sgpjtjcn/screen/audiencia.dart';
 import 'package:sgpjtjcn/screen/create_process.dart';
 import 'package:sgpjtjcn/screen/entradas.dart';
 import 'package:sgpjtjcn/screen/listAudiencia.dart';
@@ -48,7 +49,9 @@ Future<void> main() async {
             '/perfil': (context) => const Perfil(),
             '/viewRequerimento': (context) =>
                 ViewRequerimento(nRequerimento: ''),
-            '/paneladmin': (context) => const AdminPanel()
+            '/paneladmin': (context) => const AdminPanel(),
+            '/audiencia': (context) => AudienciaScreen(
+                titulo: '', emailRequerente: '', emailRequerindo: '')
           },
           initialRoute: '/login',
           home: Login())));

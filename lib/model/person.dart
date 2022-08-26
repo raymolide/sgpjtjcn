@@ -12,47 +12,48 @@ class Person {
   String estadoCivil;
   String tipo;
   String genero;
+  String dataNasc;
 
   Person(
-    this.codigo,
-    this.telefone,
-    this.nome,
-    this.apelido,
-    this.endereco,
-    this.nrBI,
-    this.profissao,
-    this.email,
-    this.estadoCivil,
-    this.tipo,
-    this.genero,
-  );
+      this.codigo,
+      this.telefone,
+      this.nome,
+      this.apelido,
+      this.endereco,
+      this.nrBI,
+      this.profissao,
+      this.email,
+      this.estadoCivil,
+      this.tipo,
+      this.genero,
+      this.dataNasc);
 
-  Person copyWith({
-    String? codigo,
-    String? telefone,
-    String? nome,
-    String? apelido,
-    String? endereco,
-    String? nrBI,
-    String? profissao,
-    String? email,
-    String? estadoCivil,
-    String? tipo,
-    String? genero,
-  }) {
+  Person copyWith(
+      {String? codigo,
+      String? telefone,
+      String? nome,
+      String? apelido,
+      String? endereco,
+      String? nrBI,
+      String? profissao,
+      String? email,
+      String? estadoCivil,
+      String? tipo,
+      String? genero,
+      String? dataNasc}) {
     return Person(
-      codigo ?? this.codigo,
-      telefone ?? this.telefone,
-      nome ?? this.nome,
-      apelido ?? this.apelido,
-      endereco ?? this.endereco,
-      nrBI ?? this.nrBI,
-      profissao ?? this.profissao,
-      email ?? this.email,
-      estadoCivil ?? this.estadoCivil,
-      tipo ?? this.tipo,
-      genero ?? this.genero,
-    );
+        codigo ?? this.codigo,
+        telefone ?? this.telefone,
+        nome ?? this.nome,
+        apelido ?? this.apelido,
+        endereco ?? this.endereco,
+        nrBI ?? this.nrBI,
+        profissao ?? this.profissao,
+        email ?? this.email,
+        estadoCivil ?? this.estadoCivil,
+        tipo ?? this.tipo,
+        genero ?? this.genero,
+        dataNasc ?? this.dataNasc);
   }
 
   Person.fromJsonFire(Map<String, dynamic> json)
@@ -66,7 +67,8 @@ class Person {
         email = json['email'],
         estadoCivil = json['estadoCivil'],
         tipo = json['tipo'],
-        genero = json['genero'];
+        genero = json['genero'],
+        dataNasc = json['dataNasc'];
 
   Map<String, dynamic> toMap() {
     return {
@@ -81,23 +83,24 @@ class Person {
       'estadoCivil': estadoCivil,
       'tipo': tipo,
       'genero': genero,
+      'dataNasc': dataNasc,
     };
   }
 
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
-      map['codigo']?.toInt() ?? 0,
-      map['telefone']?.toInt() ?? 0,
-      map['nome'] ?? '',
-      map['apelido'] ?? '',
-      map['endereco'] ?? '',
-      map['nrBI'] ?? '',
-      map['profissao'] ?? '',
-      map['email'] ?? '',
-      map['estadoCivil'] ?? '',
-      map['tipo'] ?? '',
-      map['genero'] ?? '',
-    );
+        map['codigo']?.toInt() ?? 0,
+        map['telefone']?.toInt() ?? 0,
+        map['nome'] ?? '',
+        map['apelido'] ?? '',
+        map['endereco'] ?? '',
+        map['nrBI'] ?? '',
+        map['profissao'] ?? '',
+        map['email'] ?? '',
+        map['estadoCivil'] ?? '',
+        map['tipo'] ?? '',
+        map['genero'] ?? '',
+        map['dataNasc'] ?? '');
   }
 
   String toJson() => json.encode(toMap());
@@ -106,7 +109,7 @@ class Person {
 
   @override
   String toString() {
-    return 'Person(codigo: $codigo, telefone: $telefone, nome: $nome, apelido: $apelido, endereco: $endereco, nrBI: $nrBI, profissao: $profissao, email: $email, estadoCivil: $estadoCivil, tipo: $tipo, genero: $genero)';
+    return 'Person(codigo: $codigo, telefone: $telefone, nome: $nome, apelido: $apelido, endereco: $endereco, nrBI: $nrBI, profissao: $profissao, email: $email, estadoCivil: $estadoCivil, tipo: $tipo, genero: $genero,dataNasc: $dataNasc)';
   }
 
   @override
@@ -124,7 +127,8 @@ class Person {
         other.email == email &&
         other.estadoCivil == estadoCivil &&
         other.tipo == tipo &&
-        other.genero == genero;
+        other.genero == genero &&
+        other.dataNasc == dataNasc;
   }
 
   @override
@@ -139,6 +143,7 @@ class Person {
         email.hashCode ^
         estadoCivil.hashCode ^
         tipo.hashCode ^
-        genero.hashCode;
+        genero.hashCode ^
+        dataNasc.hashCode;
   }
 }

@@ -192,6 +192,16 @@ class _MyDrawerState extends State<MyDrawer> {
                           content: MySettings()),
                     ),
                   ),
+                  isFuncionario
+                      ? ListTile(
+                          title: const Text('Painel Adminstrador',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          hoverColor: primary,
+                          onTap: () {
+                            Navigator.pushNamed(context, '/paneladmin');
+                          },
+                        )
+                      : Container(),
                   ListTile(
                     title: const Text('Sair',
                         style: TextStyle(fontWeight: FontWeight.bold)),

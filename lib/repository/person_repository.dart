@@ -37,7 +37,10 @@ class PersonRepository extends ChangeNotifier {
     return pessoa;
   }
 
-  List<Person> getAll() => pessoas;
+  List<Person> getAll() {
+    pessoas.sort((a, b) => int.parse(a.codigo).compareTo(int.parse(b.codigo)));
+    return pessoas.reversed.toList();
+  }
 
   void addPerson(Person pessoa) {
     pessoas.add(pessoa);

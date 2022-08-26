@@ -315,7 +315,8 @@ class _MySettingsState extends State<MySettings> {
                                     controllerEmail.text,
                                     controllerEstadoCivil.text,
                                     controllerTipo.text,
-                                    controllerGenero.text);
+                                    controllerGenero.text,
+                                    controllerdataNascimento.text);
 
                                 if (repository
                                     .isExistentePerson(controllerCodigo.text)) {
@@ -360,6 +361,7 @@ class _MySettingsState extends State<MySettings> {
     controllerEstadoCivil.text = pessoa.estadoCivil;
     controllerTipo.text = pessoa.tipo;
     controllerGenero.text = pessoa.genero;
+    controllerdataNascimento.text = pessoa.dataNasc;
   }
 
   Future alerta(BuildContext context) {

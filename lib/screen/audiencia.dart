@@ -82,6 +82,8 @@ class _AudienciaScreenState extends State<AudienciaScreen> {
                                 controller: controllerData),
                             SizedBox(height: size.height * .05),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Column(
                                   children: [

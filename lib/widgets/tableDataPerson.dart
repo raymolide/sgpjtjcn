@@ -140,11 +140,10 @@ class DataSource extends DataTableSource {
             style: TextStyle(color: Colors.blue[600]),
           ),
           onPressed: () {
-            String codigoPessoa = row.valueA;
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Utilizador(codigo: codigoPessoa)));
+                    builder: (context) => Utilizador(codigo: row.valueA)));
           },
         )),
         DataCell(Text(row.valueB)),

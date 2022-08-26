@@ -15,7 +15,8 @@ class Required extends Person {
       String email,
       String estadoCivil,
       String tipo,
-      String genero)
+      String genero,
+      String dataNasc)
       : super(codigo, telefone, nome, apelido, endereco, nrBI, profissao, email,
-            estadoCivil, tipo, genero);
+            estadoCivil, tipo, genero, dataNasc);
 }

@@ -34,7 +34,11 @@ class ProcessRepository extends ChangeNotifier {
     return processo;
   }
 
-  List<Process> getAll() => processos;
+  List<Process> getAll() {
+    processos
+        .sort((a, b) => int.parse(a.nprocess).compareTo(int.parse(b.nprocess)));
+    return processos.reversed.toList();
+  }
 
   void addProcess(Process processo) {
     processos.add(processo);

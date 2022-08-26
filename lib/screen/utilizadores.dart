@@ -99,7 +99,8 @@ class _UtilizadorState extends State<Utilizador> {
                           if (pessoas
                               .any((element) => element.email == email)) {
                             preencherDados(pessoas
-                                .where((element) => element.email == email)
+                                .where((element) =>
+                                    element.codigo == widget.codigo)
                                 .first);
                           }
                         } else {
@@ -340,7 +341,14 @@ class _UtilizadorState extends State<Utilizador> {
                                       circleBtnForm(
                                           const Icon(Icons.save,
                                               color: Colors.white), () async {
-                                        controllerEmail.text = repository.email;
+                                        String enderecoEmail =
+                                            controllerNome.text[0] +
+                                                controllerApelido.text +
+                                                "@gmail.com".toLowerCase();
+
+                                        controllerEmail.text =
+                                            enderecoEmail.toLowerCase();
+                                        print(controllerEmail.text);
                                         Person pessoa = Person(
                                             controllerCodigo.text,
                                             controllerTelefone.text,
@@ -352,7 +360,8 @@ class _UtilizadorState extends State<Utilizador> {
                                             controllerEmail.text,
                                             controllerEstadoCivil.text,
                                             controllerTipo.text,
-                                            controllerGenero.text);
+                                            controllerGenero.text,
+                                            controllerdataNascimento.text);
 
                                         if (repository.isExistentePerson(
                                             controllerCodigo.text)) {
@@ -401,9 +410,10 @@ class _UtilizadorState extends State<Utilizador> {
     controllerBI.text = pessoa.nrBI;
     controllerProfissao.text = pessoa.profissao;
     controllerEmail.text = pessoa.email;
-    controllerEstadoCivil.text = pessoa.estadoCivil;
-    controllerTipo.text = pessoa.tipo;
-    controllerGenero.text = pessoa.genero;
+    estado = pessoa.estadoCivil;
+    perfil = pessoa.tipo;
+    genero = pessoa.genero;
+    controllerdataNascimento.text = pessoa.dataNasc;
   }
 
   Future alerta(BuildContext context) {
