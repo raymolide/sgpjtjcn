@@ -52,6 +52,7 @@ class _AudienciaScreenState extends State<SentencaScreen> {
     fetchData =
         Provider.of<SentencaRepository>(context, listen: false).getData();
     super.initState();
+    preencherDadosProcesso();
   }
 
   @override
@@ -75,7 +76,6 @@ class _AudienciaScreenState extends State<SentencaScreen> {
                 }
 
                 controllerCodigo.text = codigo.toString();
-                preencherDadosProcesso();
 
                 return Center(
                   child: Padding(
@@ -107,13 +107,12 @@ class _AudienciaScreenState extends State<SentencaScreen> {
                             children: [
                               Expanded(
                                 child: textField(
-                                    "Titulo", const Icon(Icons.chair_alt),
+                                    "Titulo", const Icon(Icons.edit),
                                     controller: controllerTitulo),
                               ),
                               SizedBox(height: size.height * .02),
                               Expanded(
-                                child: textField(
-                                    "Estado", Icon(Icons.date_range),
+                                child: textField("Estado", Icon(Icons.edit),
                                     controller: controlleEstado),
                               ),
                             ],
@@ -123,13 +122,12 @@ class _AudienciaScreenState extends State<SentencaScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: textField("Data", Icon(Icons.chair_alt),
+                                child: textField("Data", Icon(Icons.edit),
                                     controller: controllerData),
                               ),
                               SizedBox(height: size.height * .02),
                               Expanded(
-                                child: textField(
-                                    "Parecer", Icon(Icons.date_range),
+                                child: textField("Parecer", Icon(Icons.edit),
                                     controller: controllerParecer),
                               ),
                             ],
@@ -139,14 +137,13 @@ class _AudienciaScreenState extends State<SentencaScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: textField(
-                                    "Requerido", Icon(Icons.chair_alt),
+                                child: textField("Requerido", Icon(Icons.edit),
                                     controller: controllerRequerido),
                               ),
                               SizedBox(height: size.height * .02),
                               Expanded(
                                 child: textField(
-                                    "Email Requerido", Icon(Icons.date_range),
+                                    "Email Requerido", Icon(Icons.edit),
                                     controller: controllerEmailRequerido),
                               ),
                             ],
@@ -156,14 +153,13 @@ class _AudienciaScreenState extends State<SentencaScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: textField(
-                                    "Requerente", Icon(Icons.chair_alt),
+                                child: textField("Requerente", Icon(Icons.edit),
                                     controller: controllerRequerente),
                               ),
                               SizedBox(height: size.height * .02),
                               Expanded(
                                 child: textField(
-                                    "Email Requerente", Icon(Icons.date_range),
+                                    "Email Requerente", Icon(Icons.edit),
                                     controller: controllerEmailRequerente),
                               ),
                             ],
@@ -173,35 +169,83 @@ class _AudienciaScreenState extends State<SentencaScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Column(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  circleBtn(
-                                      Icon(
-                                        Icons.send,
-                                        color: Colors.white,
-                                      ), () {
-                                    Sentenca audiencia = Sentenca(
-                                        codigo: controllerCodigo.text,
-                                        codProcesso: controllerCodProcess.text,
-                                        data: controllerData.text,
-                                        tituloProcesso: controllerTitulo.text,
-                                        estado: controlleEstado.text,
-                                        parecer: controllerParecer.text,
-                                        requerente: controllerRequerente.text,
-                                        emailRequerente:
-                                            controllerEmailRequerente.text,
-                                        requerido: controllerRequerido.text,
-                                        emailRequerido:
-                                            controllerEmailRequerido.text);
+                                  Column(
+                                    children: [
+                                      circleBtn(
+                                          Icon(
+                                            Icons.back_hand_rounded,
+                                            color: Colors.white,
+                                          ), () {
+                                        controlleEstado.text = "Absorvido";
+                                        Sentenca audiencia = Sentenca(
+                                            codigo: controllerCodigo.text,
+                                            codProcesso:
+                                                controllerCodProcess.text,
+                                            data: controllerData.text,
+                                            tituloProcesso:
+                                                controllerTitulo.text,
+                                            estado: controlleEstado.text,
+                                            parecer: controllerParecer.text,
+                                            requerente:
+                                                controllerRequerente.text,
+                                            emailRequerente:
+                                                controllerEmailRequerente.text,
+                                            requerido: controllerRequerido.text,
+                                            emailRequerido:
+                                                controllerEmailRequerido.text);
 
-                                    final reqRef = FirebaseFirestore.instance
-                                        .collection('sentenca')
-                                        .doc(audiencia.codigo)
-                                        .set(audiencia.toMap());
-                                    Navigator.popAndPushNamed(
-                                        context, '/pending');
-                                  }),
-                                  Text("Sentença")
+                                        final reqRef = FirebaseFirestore
+                                            .instance
+                                            .collection('sentenca')
+                                            .doc(audiencia.codigo)
+                                            .set(audiencia.toMap());
+                                        Navigator.popAndPushNamed(
+                                            context, '/sentencas');
+                                      }),
+                                      Text("Absorvido")
+                                    ],
+                                  ),
+                                  SizedBox(width: size.width * .05),
+                                  Column(
+                                    children: [
+                                      circleBtn(
+                                          Icon(
+                                            Icons.send,
+                                            color: Colors.white,
+                                          ), () {
+                                        controlleEstado.text = "Condenado";
+                                        Sentenca audiencia = Sentenca(
+                                            codigo: controllerCodigo.text,
+                                            codProcesso:
+                                                controllerCodProcess.text,
+                                            data: controllerData.text,
+                                            tituloProcesso:
+                                                controllerTitulo.text,
+                                            estado: controlleEstado.text,
+                                            parecer: controllerParecer.text,
+                                            requerente:
+                                                controllerRequerente.text,
+                                            emailRequerente:
+                                                controllerEmailRequerente.text,
+                                            requerido: controllerRequerido.text,
+                                            emailRequerido:
+                                                controllerEmailRequerido.text);
+
+                                        final reqRef = FirebaseFirestore
+                                            .instance
+                                            .collection('sentenca')
+                                            .doc(audiencia.codigo)
+                                            .set(audiencia.toMap());
+                                        Navigator.popAndPushNamed(
+                                            context, '/sentencas');
+                                      }),
+                                      Text("Condenado")
+                                    ],
+                                  ),
                                 ],
                               )
                             ],
@@ -220,7 +264,9 @@ class _AudienciaScreenState extends State<SentencaScreen> {
     controllerTitulo.text = widget.titulo;
     controllerRequerido.text = widget.requerido;
     controllerEmailRequerido.text = widget.emailRequerido;
-    controllerRequerido.text = widget.requerente;
+    controllerRequerente.text = widget.requerente;
     controllerEmailRequerente.text = widget.emailRequerente;
+    controllerData.text = DateTime.now().toString();
+    controlleEstado.text = " ";
   }
 }
