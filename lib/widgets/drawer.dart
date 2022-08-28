@@ -146,6 +146,18 @@ class _MyDrawerState extends State<MyDrawer> {
                           },
                         )
                       : Container(),
+                  !isFuncionario
+                      ? ListTile(
+                          title: const Text(
+                            'Minhas Sentenças',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          hoverColor: primary,
+                          onTap: () {
+                            Navigator.pushNamed(context, '/sentencas');
+                          },
+                        )
+                      : Container(),
                   isFuncionario
                       ? ListTile(
                           title: const Text('Criar Processos',

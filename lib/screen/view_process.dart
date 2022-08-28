@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sgpjtjcn/model/process.dart';
 import 'package:sgpjtjcn/repository/process_repository.dart';
 import 'package:sgpjtjcn/screen/audiencia.dart';
+import 'package:sgpjtjcn/screen/sentenca.dart';
 import 'package:sgpjtjcn/util/constants.dart';
 import 'package:sgpjtjcn/widgets/appBar.dart';
 import 'package:sgpjtjcn/widgets/button.dart';
@@ -353,7 +354,60 @@ class _ViewProcessState extends State<ViewProcess> {
                                   }, splashColor: Colors.green),
                                   Text("Salvar")
                                 ],
-                              )
+                              ),
+                              Column(
+                                children: [
+                                  circleBtn(
+                                      const Icon(Icons.edit,
+                                          color: Colors.white), () {
+                                    showDialog<String>(
+                                      barrierColor: secundaria,
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                              title: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Text('Sentença'),
+                                                  InkWell(
+                                                    child: Icon(
+                                                      Icons.close_rounded,
+                                                      color: primary,
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                              content: Container(
+                                                  width: size.width * .8,
+                                                  height: size.height * .6,
+                                                  child: SentencaScreen(
+                                                    codProcesso:
+                                                        widget.nprocesso,
+                                                    titulo:
+                                                        controllerTitulo.text,
+                                                    requerente:
+                                                        controllerRequerente
+                                                            .text,
+                                                    emailRequerente:
+                                                        controllerEmailRequerente
+                                                            .text,
+                                                    requerido:
+                                                        controllerRequerido
+                                                            .text,
+                                                    emailRequerido:
+                                                        controllerRequerido
+                                                            .text,
+                                                  ))),
+                                    );
+                                  }, splashColor: Colors.red),
+                                  Text("Declarar Sentenca")
+                                ],
+                              ),
                             ],
                           ),
                         )

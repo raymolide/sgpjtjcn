@@ -6,10 +6,12 @@ import 'package:sgpjtjcn/repository/audiencia_repository.dart';
 import 'package:sgpjtjcn/repository/person_repository.dart';
 import 'package:sgpjtjcn/repository/process_repository.dart';
 import 'package:sgpjtjcn/repository/requerimento_repository.dart';
+import 'package:sgpjtjcn/repository/sentenca_repository.dart';
 import 'package:sgpjtjcn/screen/audiencia.dart';
 import 'package:sgpjtjcn/screen/create_process.dart';
 import 'package:sgpjtjcn/screen/entradas.dart';
 import 'package:sgpjtjcn/screen/listAudiencia.dart';
+import 'package:sgpjtjcn/screen/listSentenca.dart';
 import 'package:sgpjtjcn/screen/login.dart';
 import 'package:sgpjtjcn/screen/managerAdmin.dart';
 import 'package:sgpjtjcn/screen/pendentes.dart';
@@ -17,6 +19,7 @@ import 'package:sgpjtjcn/screen/perfil.dart';
 import 'package:sgpjtjcn/screen/register.dart';
 import 'package:sgpjtjcn/screen/report.dart';
 import 'package:sgpjtjcn/screen/requerer.dart';
+import 'package:sgpjtjcn/screen/sentenca.dart';
 import 'package:sgpjtjcn/screen/settings.dart';
 import 'package:sgpjtjcn/screen/viewRequerimento.dart';
 import 'package:sgpjtjcn/screen/view_process.dart';
@@ -31,7 +34,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: ((context) => ProcessRepository())),
         ChangeNotifierProvider(create: ((context) => PersonRepository())),
         ChangeNotifierProvider(create: ((context) => AudienciaRepository())),
-        ChangeNotifierProvider(create: ((context) => RequerimentoRepository()))
+        ChangeNotifierProvider(create: ((context) => RequerimentoRepository())),
+        ChangeNotifierProvider(create: ((context) => SentencaRepository()))
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -46,10 +50,18 @@ Future<void> main() async {
             '/report': (context) => const Report(),
             '/entradas': (context) => Entradas(),
             '/audiencias': (context) => const ListAudiencias(),
+            '/sentencas': (context) => const ListSentencas(),
             '/perfil': (context) => const Perfil(),
             '/viewRequerimento': (context) =>
                 ViewRequerimento(nRequerimento: ''),
             '/paneladmin': (context) => const AdminPanel(),
+            '/sentenca': (context) => SentencaScreen(
+                codProcesso: '',
+                titulo: '',
+                requerido: '',
+                emailRequerido: '',
+                requerente: '',
+                emailRequerente: ''),
             '/audiencia': (context) => AudienciaScreen(
                 titulo: '', emailRequerente: '', emailRequerindo: '')
           },
